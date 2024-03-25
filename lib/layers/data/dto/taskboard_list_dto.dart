@@ -1,16 +1,19 @@
+import 'package:tasklist/layers/domain/entities/taskboard_entity.dart';
 import 'package:tasklist/layers/domain/entities/taskboard_list_entity.dart';
 
 class TaskBoardListDto extends TaskBoardListEntity {
-  late int cod;
-  late String nameDto;
-  late List<Map> taskboardsDto;
-
   TaskBoardListDto._();
 
-  Future<TaskBoardListEntity> call() async {
+  static TaskBoardListEntity create(
+    int cod,
+    String name,
+    List<TaskBoardEntity> taskboards,
+  ) {
     final entity = TaskBoardListDto._();
 
-    //entity.taskboards = await
+    entity.id = cod;
+    entity.name = name;
+    entity.taskboards = taskboards;
 
     return entity;
   }

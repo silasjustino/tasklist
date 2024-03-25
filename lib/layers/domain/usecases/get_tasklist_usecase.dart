@@ -3,7 +3,7 @@ import 'package:tasklist/layers/domain/entities/taskboard_list_entity.dart';
 import 'package:tasklist/layers/domain/repositories/get_tasklist_repository.dart';
 
 abstract class GetTaskListUseCase {
-  TaskBoardListEntity call();
+  Future<List<TaskBoardListEntity>> call();
 }
 
 class GetTaskListUseCaseImp implements GetTaskListUseCase {
@@ -12,7 +12,7 @@ class GetTaskListUseCaseImp implements GetTaskListUseCase {
   GetTaskListUseCaseImp(this._getTaskListRepository);
 
   @override
-  TaskBoardListEntity call() {
-    return _getTaskListRepository();
+  Future<List<TaskBoardListEntity>> call() async {
+    return await _getTaskListRepository();
   }
 }

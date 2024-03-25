@@ -8,7 +8,7 @@ class GetTaskListRepositoryImp implements GetTaskListRepository {
   GetTaskListRepositoryImp(this._getTaskListDataSource);
 
   @override
-  TaskBoardListEntity call() {
-    return _getTaskListDataSource();
+  Future<List<TaskBoardListEntity>> call() async {
+    return await _getTaskListDataSource();
   }
 }
