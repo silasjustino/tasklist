@@ -1,3 +1,4 @@
+import 'package:tasklist/layers/data/datasources/local/db/get_tasklist_datasource_db.dart';
 import 'package:tasklist/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/layers/domain/entities/task_list_entity.dart';
 
@@ -40,11 +41,14 @@ class TaskListDto extends TaskListEntity {
   }
 
   static Future<TaskListEntity> fromMap(Map map) async {
+    var getDB = GetTaskListDataSourceDB();
+
+    var taskboards = await getDB.fetchTaskBoards(map['cod']);
     //fetch das taskboards
     return TaskListDto.create(
       map['cod'],
       map['name'],
-      map['taskboards'],
+      taskboards,
     );
   }
 }
