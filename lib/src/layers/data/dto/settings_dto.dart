@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasklist/layers/domain/entities/settings_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
 
 class SettingsDto extends SettingsEntity {
   int cod;

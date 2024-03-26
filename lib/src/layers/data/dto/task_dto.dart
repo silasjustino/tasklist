@@ -1,4 +1,4 @@
-import 'package:tasklist/layers/domain/entities/task_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 
 class TaskDto extends TaskEntity {
   int cod;

@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:tasklist/layers/data/datasources/interfaces/get_tasklist_datasource.dart';
-import 'package:tasklist/layers/data/datasources/local/db/db.dart';
+import 'package:tasklist/src/layers/data/datasources/interfaces/get_tasklist_datasource.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
+import 'package:tasklist/src/layers/data/dto/taskboard_list_dto.dart';
 
 class GetTaskListDataSourceDB implements GetTaskListDataSource {
   final Database _db = DB.instance.database;
@@ -38,8 +39,14 @@ class GetTaskListDataSourceDB implements GetTaskListDataSource {
   }
 
   @override
-  Future<List<Map>> call() {
-    final tasklists = fetchTaskLists();
+  Future<List<TaskListDto>> call() async {
+    var maps = await fetchTaskLists();
+
+    List<TaskListDto> tasklists = [];
+
+    for (int i = 0; i < tasklists.length; i++) {
+      tasklists.add(await TaskListDto.fromMap(maps[i]));
+    }
 
     return tasklists;
   }

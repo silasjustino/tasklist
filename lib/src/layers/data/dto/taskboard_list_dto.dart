@@ -1,6 +1,6 @@
-import 'package:tasklist/layers/data/datasources/local/db/get_tasklist_datasource_db.dart';
-import 'package:tasklist/layers/data/dto/taskboard_dto.dart';
-import 'package:tasklist/layers/domain/entities/task_list_entity.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/get_tasklist_datasource_db.dart';
+import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
+import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 
 class TaskListDto extends TaskListEntity {
   int cod;
@@ -14,7 +14,7 @@ class TaskListDto extends TaskListEntity {
           name: nameDto,
         );
 
-  static Future<TaskListEntity> create(
+  static Future<TaskListDto> create(
     int cod,
     String name,
     List<Map> taskboards,
@@ -40,7 +40,7 @@ class TaskListDto extends TaskListEntity {
     return taskboardsDto;
   }
 
-  static Future<TaskListEntity> fromMap(Map map) async {
+  static Future<TaskListDto> fromMap(Map map) async {
     var getDB = GetTaskListDataSourceDB();
 
     var taskboards = await getDB.fetchTaskBoards(map['cod']);

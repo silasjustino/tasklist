@@ -1,4 +1,4 @@
-import 'package:tasklist/layers/domain/entities/taskboard_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 class TaskListEntity {
   int id;

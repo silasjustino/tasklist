@@ -1,7 +1,7 @@
-import 'package:tasklist/layers/data/datasources/local/db/get_tasklist_datasource_db.dart';
-import 'package:tasklist/layers/data/dto/date_completed_dto.dart';
-import 'package:tasklist/layers/data/dto/task_dto.dart';
-import 'package:tasklist/layers/domain/entities/taskboard_entity.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/get_tasklist_datasource_db.dart';
+import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
+import 'package:tasklist/src/layers/data/dto/task_dto.dart';
+import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 class TaskBoardDto extends TaskBoardEntity {
   int cod;
