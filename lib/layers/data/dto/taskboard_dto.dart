@@ -1,33 +1,52 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:tasklist/layers/domain/entities/task_entity.dart';
+import 'package:tasklist/layers/data/datasources/local/db/get_tasklist_datasource_db.dart';
+import 'package:tasklist/layers/data/dto/date_completed_dto.dart';
+import 'package:tasklist/layers/data/dto/task_dto.dart';
 import 'package:tasklist/layers/domain/entities/taskboard_entity.dart';
 
 class TaskBoardDto extends TaskBoardEntity {
-  late int codTasklist;
+  int cod;
+  int codTasklist;
+  String nameDto;
+  String dateCreatedDto;
+  int enabledDto;
+  List<Map> tasksDto;
+  List<Map> dateCompletedDto;
 
-  TaskBoardDto._();
+  TaskBoardDto(
+    this.cod,
+    this.codTasklist,
+    this.nameDto,
+    this.dateCreatedDto,
+    this.enabledDto,
+    this.tasksDto,
+    this.dateCompletedDto,
+  ) : super(
+          id: cod,
+          name: nameDto,
+          dateCreated: dateCreatedDto,
+        ) {
+    tasks = List.generate(tasksDto.length, (i) {
+      return TaskDto.fromMap(tasksDto[i]);
+    });
+    dateCompleted = List.generate(dateCompletedDto.length, (i) {
+      return DateCompletedDto.fromMap(dateCompletedDto[i]).dateCompletedDto;
+    });
+  }
 
-  static TaskBoardEntity create(
-    int cod,
-    int codTasklist,
-    String name,
-    String dateCreated,
-    int enabled,
-    List<TaskEntity> tasks,
-    List<String> dateCompleted,
-  ) {
-    final entity = TaskBoardDto._();
+  static Future<TaskBoardDto> fromMap(Map map) async {
+    var getDB = GetTaskListDataSourceDB();
 
-    entity.codTasklist = codTasklist;
+    var tasks = await getDB.fetchTasks(map['cod']);
+    var dateCompleted = await getDB.fetchDateCompleted(map['cod']);
 
-    entity.id = cod;
-    entity.name = name;
-    entity.tasks = tasks;
-    entity.dateCreated = dateCreated;
-    entity.dateCompleted = dateCompleted;
-
-    enabled == 0 ? entity.enabled = false : entity.enabled = true;
-
-    return entity;
+    return TaskBoardDto(
+      map['cod'],
+      map['cod_tasklist'],
+      map['name'],
+      map['date_created'],
+      map['enabled'],
+      tasks,
+      dateCompleted,
+    );
   }
 }

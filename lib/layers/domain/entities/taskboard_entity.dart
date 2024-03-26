@@ -1,12 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:tasklist/layers/domain/entities/task_entity.dart';
 
 class TaskBoardEntity {
-  late int id;
-  late String name;
-  late List<TaskEntity> tasks;
-  late String dateCreated;
-  late List<String> dateCompleted;
+  int id;
+  String name;
+  List<TaskEntity> tasks = [];
+  String dateCreated;
+  List<String> dateCompleted = [];
   bool enabled = true;
+
+  TaskBoardEntity({
+    required this.id,
+    required this.name,
+    required this.dateCreated,
+  });
 
   resetTaskBoard() {
     final completedTasks = tasks.where((task) => task.completed).toList();

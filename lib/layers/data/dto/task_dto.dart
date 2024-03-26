@@ -1,29 +1,37 @@
 import 'package:tasklist/layers/domain/entities/task_entity.dart';
 
 class TaskDto extends TaskEntity {
-  late int codTaskboard;
-  late int completedDto;
+  int cod;
+  int codTaskboard;
+  String descriptionDto;
+  String dateCreatedDto;
+  String dateCompletedDto;
+  int completedDto;
 
-  TaskDto._();
+  TaskDto(
+    this.cod,
+    this.codTaskboard,
+    this.descriptionDto,
+    this.dateCreatedDto,
+    this.dateCompletedDto,
+    this.completedDto,
+  ) : super(
+          id: cod,
+          description: descriptionDto,
+          dateCreated: dateCreatedDto,
+          dateCompleted: dateCompletedDto,
+        ) {
+    completedDto == 0 ? completed = false : completed = true;
+  }
 
-  static TaskEntity create(
-    int cod,
-    int codTaskboard,
-    String description,
-    String dateCreated,
-    String dateCompleted,
-    int completed,
-  ) {
-    final entity = TaskDto._();
-    entity.codTaskboard = codTaskboard;
-
-    entity.id = cod;
-    entity.description = description;
-    entity.dateCreated = dateCreated;
-    entity.dateCompleted = dateCompleted;
-
-    completed == 0 ? entity.completed = false : entity.completed = true;
-
-    return entity;
+  factory TaskDto.fromMap(Map map) {
+    return TaskDto(
+      map['cod'],
+      map['cod_taskboard'],
+      map['description'],
+      map['date_created'],
+      map['date_completed'],
+      map['completed'],
+    );
   }
 }
