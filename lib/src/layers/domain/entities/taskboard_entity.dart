@@ -4,23 +4,24 @@ import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 class TaskBoardEntity {
   int id;
   String name;
-  List<TaskEntity> tasks;
+  List<TaskEntity>? tasks;
   String dateCreated;
-  List<DateCompletedEntity> dateCompleted;
+  List<DateCompletedEntity>? dateCompleted;
   bool enabled = true;
 
   TaskBoardEntity({
     required this.id,
     required this.name,
-    required this.tasks,
+    this.tasks,
     required this.dateCreated,
-    required this.dateCompleted,
+    this.dateCompleted,
   });
 
   resetTaskBoard() {
-    final completedTasks = tasks.where((task) => task.completed).toList();
-    for (var i = 0; i < completedTasks.length; i++) {
-      completedTasks[i].completed = false;
+    if (tasks != null) {
+      for (int i = 0; i < tasks!.length; i++) {
+        tasks![i].completed = false;
+      }
     }
   }
 }

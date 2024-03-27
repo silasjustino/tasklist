@@ -2,13 +2,13 @@ class TaskEntity {
   int id;
   String description;
   String dateCreated;
-  String dateCompleted;
+  String? dateCompleted;
   bool completed = false;
 
   TaskEntity({
     required this.id,
     required this.description,
     required this.dateCreated,
-    required this.dateCompleted,
+    this.dateCompleted,
   });
 }

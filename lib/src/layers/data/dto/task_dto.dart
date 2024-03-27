@@ -6,7 +6,7 @@ class TaskDto extends TaskEntity {
   int codTaskboard;
   String descriptionDto;
   String dateCreatedDto;
-  String dateCompletedDto;
+  String? dateCompletedDto;
   int completedDto;
 
   TaskDto(
