@@ -1,4 +1,4 @@
-import 'package:tasklist/src/layers/data/datasources/local/db/get_tasklist_datasource_db.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
@@ -9,8 +9,8 @@ class TaskBoardDto extends TaskBoardEntity {
   String nameDto;
   String dateCreatedDto;
   int enabledDto;
-  List<Map> tasksDto;
-  List<Map> dateCompletedDto;
+  List<TaskDto> tasksDto;
+  List<DateCompletedDto> dateCompletedDto;
 
   TaskBoardDto(
     this.cod,
@@ -23,18 +23,16 @@ class TaskBoardDto extends TaskBoardEntity {
   ) : super(
           id: cod,
           name: nameDto,
+          tasks: tasksDto,
           dateCreated: dateCreatedDto,
         ) {
-    tasks = List.generate(tasksDto.length, (i) {
-      return TaskDto.fromMap(tasksDto[i]);
-    });
     dateCompleted = List.generate(dateCompletedDto.length, (i) {
-      return DateCompletedDto.fromMap(dateCompletedDto[i]).dateCompletedDto;
+      return dateCompletedDto[i].dateCompletedDto;
     });
   }
 
   static Future<TaskBoardDto> fromMap(Map map) async {
-    var getDB = GetTaskListDataSourceDB();
+    var getDB = GetEntitiesDataSourceDB();
 
     var tasks = await getDB.fetchTasks(map['cod']);
     var dateCompleted = await getDB.fetchDateCompleted(map['cod']);
@@ -48,5 +46,15 @@ class TaskBoardDto extends TaskBoardEntity {
       tasks,
       dateCompleted,
     );
+  }
+
+  Map toMap() {
+    return {
+      'cod': cod,
+      'cod_tasklist': codTasklist,
+      'name': nameDto,
+      'date_created': dateCreatedDto,
+      'enabled': enabledDto,
+    };
   }
 }

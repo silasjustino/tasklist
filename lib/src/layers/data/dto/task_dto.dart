@@ -34,4 +34,15 @@ class TaskDto extends TaskEntity {
       map['completed'],
     );
   }
+
+  Map toMap() {
+    return {
+      'cod': cod,
+      'cod_taskboard': codTaskboard,
+      'description': descriptionDto,
+      'date_created': dateCreatedDto,
+      'date_completed': dateCompletedDto,
+      'completed': completedDto,
+    };
+  }
 }

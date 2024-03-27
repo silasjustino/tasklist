@@ -16,4 +16,12 @@ class DateCompletedDto {
       map['date_completed'],
     );
   }
+
+  Map toMap() {
+    return {
+      'cod': cod,
+      'cod_taskboard': codTaskboard,
+      'date_completed': dateCompletedDto,
+    };
+  }
 }
