@@ -36,7 +36,7 @@ class TaskDto extends TaskEntity {
     );
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'cod': cod,
       'cod_taskboard': codTaskboard,

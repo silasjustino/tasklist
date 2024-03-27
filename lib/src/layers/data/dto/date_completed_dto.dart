@@ -20,7 +20,7 @@ class DateCompletedDto extends DateCompletedEntity {
     );
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'cod': cod,
       'cod_taskboard': codTaskboard,

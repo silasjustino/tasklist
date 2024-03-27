@@ -29,7 +29,7 @@ class TaskListDto extends TaskListEntity {
     );
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'cod': cod,
       'name': nameDto,
