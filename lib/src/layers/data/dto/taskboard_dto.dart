@@ -25,17 +25,16 @@ class TaskBoardDto extends TaskBoardEntity {
           name: nameDto,
           tasks: tasksDto,
           dateCreated: dateCreatedDto,
+          dateCompleted: dateCompletedDto,
         ) {
-    dateCompleted = List.generate(dateCompletedDto.length, (i) {
-      return dateCompletedDto[i].dateCompletedDto;
-    });
+    enabledDto == 0 ? enabled = false : enabled = true;
   }
 
   static Future<TaskBoardDto> fromMap(Map map) async {
     var getDB = GetEntitiesDataSourceDB();
 
-    var tasks = await getDB.fetchTasks(map['cod']);
-    var dateCompleted = await getDB.fetchDateCompleted(map['cod']);
+    var tasks = await getDB.fetchListTask(map['cod']);
+    var dateCompleted = await getDB.fetchListDateCompleted(map['cod']);
 
     return TaskBoardDto(
       map['cod'],
@@ -56,5 +55,11 @@ class TaskBoardDto extends TaskBoardEntity {
       'date_created': dateCreatedDto,
       'enabled': enabledDto,
     };
+  }
+
+  static Future<TaskBoardDto> fromEntity(TaskBoardEntity taskboard) async {
+    final getDB = GetEntitiesDataSourceDB();
+
+    return await getDB.fetchTaskboard(taskboard.id);
   }
 }

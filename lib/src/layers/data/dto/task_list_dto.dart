@@ -20,7 +20,7 @@ class TaskListDto extends TaskListEntity {
   static Future<TaskListDto> fromMap(Map map) async {
     var getDB = GetEntitiesDataSourceDB();
 
-    var taskboards = await getDB.fetchTaskboards(map['cod']);
+    var taskboards = await getDB.fetchListTaskboard(map['cod']);
     //fetch das taskboards
     return TaskListDto(
       map['cod'],
@@ -34,5 +34,11 @@ class TaskListDto extends TaskListEntity {
       'cod': cod,
       'name': nameDto,
     };
+  }
+
+  static Future<TaskListDto> fromEntity(TaskListEntity tasklist) async {
+    final getDB = GetEntitiesDataSourceDB();
+
+    return await getDB.fetchTasklist(tasklist.id);
   }
 }

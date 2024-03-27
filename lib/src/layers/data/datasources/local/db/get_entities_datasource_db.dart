@@ -10,7 +10,15 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
   final Database _db = DB.instance.database;
 
   @override
-  Future<List<TaskDto>> fetchTasks(int id) async {
+  Future<TaskDto> fetchTask(int id) async {
+    var maps =
+        await _db.query('task', where: 'cod = ?', whereArgs: [id], limit: 1);
+
+    return TaskDto.fromMap(maps.first);
+  }
+
+  @override
+  Future<List<TaskDto>> fetchListTask(int id) async {
     var maps =
         await _db.query('task', where: 'cod_taskboard = ?', whereArgs: [id]);
 
@@ -23,7 +31,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
     return tasks;
   }
 
-  Future<List<DateCompletedDto>> fetchDateCompleted(int id) async {
+  @override
+  Future<DateCompletedDto> fetchDateCompleted(int id) async {
+    var maps = await _db.query('date_completed',
+        where: 'cod = ?', whereArgs: [id], limit: 1);
+
+    return DateCompletedDto.fromMap(maps.first);
+  }
+
+  @override
+  Future<List<DateCompletedDto>> fetchListDateCompleted(int id) async {
     var maps = await _db
         .query('date_completed', where: 'cod_taskboard = ?', whereArgs: [id]);
 
@@ -45,7 +62,7 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
   }
 
   @override
-  Future<List<TaskBoardDto>> fetchTaskboards(int id) async {
+  Future<List<TaskBoardDto>> fetchListTaskboard(int id) async {
     var maps = await _db
         .query('taskboard', where: 'cod_tasklist = ?', whereArgs: [id]);
 
@@ -67,7 +84,7 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
   }
 
   @override
-  Future<List<TaskListDto>> fetchTasklists() async {
+  Future<List<TaskListDto>> fetchListTasklist() async {
     var maps = await _db.query('tasklist');
 
     List<TaskListDto> tasklists = [];

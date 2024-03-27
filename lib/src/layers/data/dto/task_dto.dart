@@ -1,3 +1,4 @@
+import 'package:tasklist/src/layers/data/datasources/local/db/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 
 class TaskDto extends TaskEntity {
@@ -44,5 +45,11 @@ class TaskDto extends TaskEntity {
       'date_completed': dateCompletedDto,
       'completed': completedDto,
     };
+  }
+
+  static Future<TaskDto> fromEntity(TaskEntity task) async {
+    final getDB = GetEntitiesDataSourceDB();
+
+    return await getDB.fetchTask(task.id);
   }
 }
