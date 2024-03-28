@@ -48,7 +48,7 @@ class SettingsDto extends SettingsEntity {
     );
   }
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'cod': cod,
       'theme_mode': theme,

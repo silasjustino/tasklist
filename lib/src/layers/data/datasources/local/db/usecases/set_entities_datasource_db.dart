@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tasklist/src/layers/data/datasources/interfaces/set_entities_datasource.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
+import 'package:tasklist/src/layers/data/dto/settings_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_list_dto.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
@@ -12,14 +13,13 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
   final Database _db = DB.instance.database;
 
   @override
-  Future<bool> saveDateCompleted(DateCompletedDto dateCompleted) async {
+  Future<bool> saveSettings(SettingsDto settings) async {
     try {
       await _db.insert(
-        'date_completed',
-        dateCompleted.toMap(),
+        'settings',
+        settings.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-
       return true;
     } catch (e) {
       log('$e');
@@ -33,6 +33,22 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
       await _db.insert(
         'task',
         task.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+
+      return true;
+    } catch (e) {
+      log('$e');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> saveDateCompleted(DateCompletedDto dateCompleted) async {
+    try {
+      await _db.insert(
+        'date_completed',
+        dateCompleted.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
 

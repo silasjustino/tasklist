@@ -1,9 +1,11 @@
 import 'package:tasklist/src/layers/data/datasources/interfaces/set_entities_datasource.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
+import 'package:tasklist/src/layers/data/dto/settings_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_list_dto.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
@@ -13,6 +15,13 @@ class SetEntitiesRepositoryImp implements SetEntitiesRepository {
   final SetEntitiesDataSource _setEntitiesDataSource;
 
   SetEntitiesRepositoryImp(this._setEntitiesDataSource);
+
+  @override
+  Future<bool> saveSettings(SettingsEntity settings) async {
+    final settingsDto = SettingsDto.fromEntity(settings);
+
+    return await _setEntitiesDataSource.saveSettings(settingsDto);
+  }
 
   @override
   Future<bool> saveTask(TaskEntity task) async {
