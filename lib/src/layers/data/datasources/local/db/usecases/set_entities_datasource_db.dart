@@ -16,7 +16,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
 
   @override
   Future<bool> saveSettings(SettingsDto settings) async {
-    final values = [
+    final values = <dynamic>[
       settings.theme,
       settings.sort,
       settings.view,
@@ -34,6 +34,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
         return false;
       }
     } else {
+      values.add(settings.cod);
       try {
         _db.rawUpdate(UpdateDBQuery.settings, values);
 
@@ -48,7 +49,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
 
   @override
   Future<bool> saveTask(TaskDto task) async {
-    final values = [
+    final values = <dynamic>[
       task.codTaskboard,
       task.descriptionDto,
       task.dateCreatedDto,
@@ -67,6 +68,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
         return false;
       }
     } else {
+      values.add(task.cod);
       try {
         _db.rawUpdate(UpdateDBQuery.task, values);
 
@@ -81,7 +83,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
 
   @override
   Future<bool> saveDateCompleted(DateCompletedDto dateCompleted) async {
-    final values = [
+    final values = <dynamic>[
       dateCompleted.codTaskboard,
       dateCompleted.dateCompletedDto,
     ];
@@ -97,6 +99,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
         return false;
       }
     } else {
+      values.add(dateCompleted.cod);
       try {
         _db.rawUpdate(UpdateDBQuery.dateCompleted, values);
 
@@ -111,7 +114,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
 
   @override
   Future<bool> saveTaskboard(TaskBoardDto taskboard) async {
-    final values = [
+    final values = <dynamic>[
       taskboard.codTasklist,
       taskboard.nameDto,
       taskboard.dateCreatedDto,
@@ -129,6 +132,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
         return false;
       }
     } else {
+      values.add(taskboard.cod);
       try {
         _db.rawUpdate(UpdateDBQuery.taskboard, values);
 
@@ -143,7 +147,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
 
   @override
   Future<bool> saveTasklist(TaskListDto tasklist) async {
-    final values = [
+    final values = <dynamic>[
       tasklist.nameDto,
     ];
 
@@ -158,6 +162,7 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
         return false;
       }
     } else {
+      values.add(tasklist.cod);
       try {
         _db.rawUpdate(UpdateDBQuery.tasklist, values);
 
