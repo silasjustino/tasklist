@@ -1,5 +1,6 @@
 import 'package:tasklist/src/layers/data/datasources/interfaces/get_entities_datasource.dart';
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
@@ -9,6 +10,11 @@ class GetEntitiesRepositoryImp implements GetEntitiesRepository {
   final GetEntitiesDataSource _getEntitiesDataSource;
 
   GetEntitiesRepositoryImp(this._getEntitiesDataSource);
+
+  @override
+  Future<SettingsEntity> fetchSettings(int id) async {
+    return await _getEntitiesDataSource.fetchSettings(id);
+  }
 
   @override
   Future<TaskEntity> fetchTask(int id) async {

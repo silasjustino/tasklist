@@ -1,4 +1,4 @@
-import 'package:tasklist/src/layers/data/datasources/local/db/get_entities_datasource_db.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 
@@ -36,9 +36,19 @@ class TaskListDto extends TaskListEntity {
     };
   }
 
-  static Future<TaskListDto> fromEntity(TaskListEntity tasklist) async {
-    final getDB = GetEntitiesDataSourceDB();
+  factory TaskListDto.fromEntity(TaskListEntity tasklist) {
+    var taskboards = <TaskBoardDto>[];
 
-    return await getDB.fetchTasklist(tasklist.id);
+    if (tasklist.taskboards != null) {
+      for (int i = 0; i < tasklist.taskboards!.length; i++) {
+        taskboards.add(TaskBoardDto.fromEntity(tasklist.taskboards![i]));
+      }
+    }
+
+    return TaskListDto(
+      tasklist.id,
+      tasklist.name,
+      taskboards,
+    );
   }
 }

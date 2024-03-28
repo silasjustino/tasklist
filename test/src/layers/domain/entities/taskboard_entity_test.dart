@@ -4,12 +4,20 @@ import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 void main() {
   List<TaskEntity> tasks = [
-    TaskEntity(id: 1, description: 'New Task', dateCreated: '27-03-2024-19:44'),
     TaskEntity(
-        id: 2, description: 'New Task 2', dateCreated: '27-03-2024-19:45'),
+        id: 1,
+        idTaskboard: 1,
+        description: 'New Task',
+        dateCreated: '27-03-2024-19:44'),
+    TaskEntity(
+        id: 2,
+        idTaskboard: 1,
+        description: 'New Task 2',
+        dateCreated: '27-03-2024-19:45'),
   ];
   TaskBoardEntity taskboard = TaskBoardEntity(
     id: 1,
+    idTasklist: 1,
     name: 'College',
     tasks: tasks,
     dateCreated: '27-03-2024-19:44',

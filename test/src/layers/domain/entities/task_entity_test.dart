@@ -4,6 +4,7 @@ import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 void main() {
   TaskEntity task = TaskEntity(
     id: 1,
+    idTaskboard: 1,
     description: 'Nova task',
     dateCreated: '27-03-2024-19:38',
   );

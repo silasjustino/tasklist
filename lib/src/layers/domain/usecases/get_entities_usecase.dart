@@ -1,10 +1,12 @@
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 import 'package:tasklist/src/layers/domain/repositories/get_entities_repository.dart';
 
 abstract class GetEntitiesUseCase {
+  Future<SettingsEntity> fetchSettings(int id);
   Future<TaskEntity> fetchTask(int id);
   Future<List<TaskEntity>> fetchListTask(int id);
   Future<DateCompletedEntity> fetchDateCompleted(int id);
@@ -19,6 +21,11 @@ class GetEntitiesCaseImp implements GetEntitiesUseCase {
   final GetEntitiesRepository _getTaskListRepository;
 
   GetEntitiesCaseImp(this._getTaskListRepository);
+
+  @override
+  Future<SettingsEntity> fetchSettings(int id) async {
+    return await _getTaskListRepository.fetchSettings(id);
+  }
 
   @override
   Future<TaskEntity> fetchTask(int id) async {

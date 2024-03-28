@@ -1,4 +1,3 @@
-import 'package:tasklist/src/layers/data/datasources/local/db/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
 
 class DateCompletedDto extends DateCompletedEntity {
@@ -10,7 +9,11 @@ class DateCompletedDto extends DateCompletedEntity {
     this.cod,
     this.codTaskboard,
     this.dateCompletedDto,
-  ) : super(id: cod, dateCompleted: dateCompletedDto);
+  ) : super(
+          id: cod,
+          idTaskboard: codTaskboard,
+          dateCompleted: dateCompletedDto,
+        );
 
   factory DateCompletedDto.fromMap(Map map) {
     return DateCompletedDto(
@@ -28,10 +31,11 @@ class DateCompletedDto extends DateCompletedEntity {
     };
   }
 
-  static Future<DateCompletedDto> fromEntity(
-      DateCompletedEntity dateCompleted) async {
-    final getDB = GetEntitiesDataSourceDB();
-
-    return await getDB.fetchDateCompleted(dateCompleted.id);
+  factory DateCompletedDto.fromEntity(DateCompletedEntity dateCompleted) {
+    return DateCompletedDto(
+      dateCompleted.id,
+      dateCompleted.idTaskboard,
+      dateCompleted.dateCompleted,
+    );
   }
 }

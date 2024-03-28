@@ -1,5 +1,6 @@
 class TaskEntity {
   int id;
+  int idTaskboard;
   String description;
   String dateCreated;
   String? dateCompleted;
@@ -7,6 +8,7 @@ class TaskEntity {
 
   TaskEntity({
     required this.id,
+    required this.idTaskboard,
     required this.description,
     required this.dateCreated,
     this.dateCompleted,

@@ -8,15 +8,13 @@ class SettingsDto extends SettingsEntity {
   String view;
   String date;
 
-  SettingsDto({
-    required this.cod,
-    required this.theme,
-    required this.sort,
-    required this.view,
-    required this.date,
-  }) : super(id: cod) {
-    dateSyncronized = date;
-
+  SettingsDto(
+    this.cod,
+    this.theme,
+    this.sort,
+    this.view,
+    this.date,
+  ) : super(id: cod) {
     if (theme == ThemeMode.light.name) {
       themeMode = ThemeMode.light;
     } else if (theme == ThemeMode.dark.name) {
@@ -40,13 +38,14 @@ class SettingsDto extends SettingsEntity {
     }
   }
 
-  SettingsDto fromMap(Map map) {
+  factory SettingsDto.fromMap(Map map) {
     return SettingsDto(
-        cod: map['cod'],
-        theme: map['theme_mode'],
-        sort: map['sort_mode'],
-        view: map['view_mode'],
-        date: map['date_sync']);
+      map['cod'],
+      map['theme_mode'],
+      map['sort_mode'],
+      map['view_mode'],
+      map['date_sync'],
+    );
   }
 
   Map toMap() {
@@ -57,5 +56,15 @@ class SettingsDto extends SettingsEntity {
       'view_mode': view,
       'date_sync': date,
     };
+  }
+
+  factory SettingsDto.fromEntity(SettingsEntity settings) {
+    return SettingsDto(
+      settings.id,
+      settings.themeMode.name,
+      settings.sortMode.name,
+      settings.viewMode.name,
+      settings.dateSyncronized,
+    );
   }
 }

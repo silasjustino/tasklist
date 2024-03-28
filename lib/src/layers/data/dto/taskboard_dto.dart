@@ -1,4 +1,4 @@
-import 'package:tasklist/src/layers/data/datasources/local/db/get_entities_datasource_db.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
@@ -22,6 +22,7 @@ class TaskBoardDto extends TaskBoardEntity {
     this.dateCompletedDto,
   ) : super(
           id: cod,
+          idTasklist: codTasklist,
           name: nameDto,
           tasks: tasksDto,
           dateCreated: dateCreatedDto,
@@ -57,9 +58,31 @@ class TaskBoardDto extends TaskBoardEntity {
     };
   }
 
-  static Future<TaskBoardDto> fromEntity(TaskBoardEntity taskboard) async {
-    final getDB = GetEntitiesDataSourceDB();
+  factory TaskBoardDto.fromEntity(TaskBoardEntity taskboard) {
+    var tasks = <TaskDto>[];
+    var dateCompleted = <DateCompletedDto>[];
 
-    return await getDB.fetchTaskboard(taskboard.id);
+    if (taskboard.tasks != null) {
+      for (int i = 0; i < taskboard.tasks!.length; i++) {
+        tasks.add(TaskDto.fromEntity(taskboard.tasks![i]));
+      }
+    }
+
+    if (taskboard.dateCompleted != null) {
+      for (int i = 0; i < taskboard.dateCompleted!.length; i++) {
+        dateCompleted
+            .add(DateCompletedDto.fromEntity(taskboard.dateCompleted![i]));
+      }
+    }
+
+    return TaskBoardDto(
+      taskboard.id,
+      taskboard.idTasklist,
+      taskboard.name,
+      taskboard.dateCreated,
+      taskboard.enabled ? 1 : 0,
+      tasks,
+      dateCompleted,
+    );
   }
 }
