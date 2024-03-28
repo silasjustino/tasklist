@@ -3,10 +3,11 @@ import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 class TaskListDto extends TaskListEntity {
   String nameDto;
-  List<TaskBoardDto> taskboardsDto;
+  List<TaskBoardEntity> taskboardsDto;
 
   TaskListDto({
     int? cod,
@@ -40,11 +41,11 @@ class TaskListDto extends TaskListEntity {
   }
 
   factory TaskListDto.fromEntity(TaskListEntity tasklist) {
-    var taskboards = <TaskBoardDto>[];
+    var taskboards = <TaskBoardEntity>[];
 
-    if (tasklist.taskboards != null) {
-      for (int i = 0; i < tasklist.taskboards!.length; i++) {
-        taskboards.add(TaskBoardDto.fromEntity(tasklist.taskboards![i]));
+    if (tasklist.taskboards.isNotEmpty) {
+      for (int i = 0; i < tasklist.taskboards.length; i++) {
+        taskboards.add(TaskBoardDto.fromEntity(tasklist.taskboards[i]));
       }
     }
 

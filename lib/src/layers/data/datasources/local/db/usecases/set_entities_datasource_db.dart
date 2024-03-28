@@ -128,6 +128,20 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
       taskboard.enabledDto,
     ];
 
+    if (taskboard.tasksDto.isNotEmpty) {
+      for (int i = 0; i < taskboard.tasksDto.length; i++) {
+        taskboard.tasksDto[i] =
+            await saveTask(taskboard.tasksDto[i] as TaskDto);
+      }
+    }
+
+    if (taskboard.dateCompletedDto.isNotEmpty) {
+      for (int i = 0; i < taskboard.dateCompletedDto.length; i++) {
+        taskboard.dateCompletedDto[i] = await saveDateCompleted(
+            taskboard.dateCompletedDto[i] as DateCompletedDto);
+      }
+    }
+
     if (taskboard.id == null) {
       try {
         int id = await _db.rawInsert(InsertDBQuery.taskboard, values);
@@ -159,6 +173,13 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
     final values = <dynamic>[
       tasklist.nameDto,
     ];
+
+    if (tasklist.taskboardsDto.isNotEmpty) {
+      for (int i = 0; i < tasklist.taskboardsDto.length; i++) {
+        tasklist.taskboardsDto[i] =
+            await saveTaskboard(tasklist.taskboardsDto[i] as TaskBoardDto);
+      }
+    }
 
     if (tasklist.id == null) {
       try {

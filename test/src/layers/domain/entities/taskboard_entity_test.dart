@@ -21,6 +21,7 @@ void main() {
     name: 'College',
     tasks: tasks,
     dateCreated: '27-03-2024-19:44',
+    dateCompleted: [],
   );
 
   test('taskboard entity not null', () {
@@ -31,29 +32,29 @@ void main() {
     expect(taskboard.id, 1);
   });
 
-  test('taskboard dateCompleted starts null', () {
-    expect(taskboard.dateCompleted, isNull);
+  test('taskboard dateCompleted starts empty', () {
+    expect(taskboard.dateCompleted.isEmpty, true);
   });
 
   test('taskboard tasks is 2', () {
-    expect(taskboard.tasks!.length, 2);
+    expect(taskboard.tasks.length, 2);
   });
 
   test('taskboard tasks completed', () {
-    for (int i = 0; i < taskboard.tasks!.length; i++) {
-      taskboard.tasks![i].completed = true;
+    for (int i = 0; i < taskboard.tasks.length; i++) {
+      taskboard.tasks[i].completed = true;
     }
 
-    expect(taskboard.tasks![1].completed, true);
+    expect(taskboard.tasks[1].completed, true);
   });
 
   test('taskboard tasks completed reseted', () {
-    for (int i = 0; i < taskboard.tasks!.length; i++) {
-      taskboard.tasks![i].completed = true;
+    for (int i = 0; i < taskboard.tasks.length; i++) {
+      taskboard.tasks[i].completed = true;
     }
 
     taskboard.resetTaskBoard();
 
-    expect(taskboard.tasks![1].completed, false);
+    expect(taskboard.tasks[1].completed, false);
   });
 }

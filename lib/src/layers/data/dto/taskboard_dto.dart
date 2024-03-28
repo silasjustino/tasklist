@@ -3,6 +3,8 @@ import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
+import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 class TaskBoardDto extends TaskBoardEntity {
@@ -10,8 +12,8 @@ class TaskBoardDto extends TaskBoardEntity {
   String nameDto;
   String dateCreatedDto;
   int enabledDto;
-  List<TaskDto> tasksDto;
-  List<DateCompletedDto> dateCompletedDto;
+  List<TaskEntity> tasksDto;
+  List<DateCompletedEntity> dateCompletedDto;
 
   TaskBoardDto({
     int? cod,
@@ -62,19 +64,19 @@ class TaskBoardDto extends TaskBoardEntity {
   }
 
   factory TaskBoardDto.fromEntity(TaskBoardEntity taskboard) {
-    var tasks = <TaskDto>[];
-    var dateCompleted = <DateCompletedDto>[];
+    var tasks = <TaskEntity>[];
+    var dateCompleted = <DateCompletedEntity>[];
 
-    if (taskboard.tasks != null) {
-      for (int i = 0; i < taskboard.tasks!.length; i++) {
-        tasks.add(TaskDto.fromEntity(taskboard.tasks![i]));
+    if (taskboard.tasks.isNotEmpty) {
+      for (int i = 0; i < taskboard.tasks.length; i++) {
+        tasks.add(TaskDto.fromEntity(taskboard.tasks[i]));
       }
     }
 
-    if (taskboard.dateCompleted != null) {
-      for (int i = 0; i < taskboard.dateCompleted!.length; i++) {
+    if (taskboard.dateCompleted.isNotEmpty) {
+      for (int i = 0; i < taskboard.dateCompleted.length; i++) {
         dateCompleted
-            .add(DateCompletedDto.fromEntity(taskboard.dateCompleted![i]));
+            .add(DateCompletedDto.fromEntity(taskboard.dateCompleted[i]));
       }
     }
 

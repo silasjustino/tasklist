@@ -6,6 +6,8 @@ import 'package:tasklist/src/layers/data/datasources/local/db/usecases/set_entit
 import 'package:tasklist/src/layers/data/dto/settings_dto.dart';
 import 'package:tasklist/src/layers/data/repositories/set_entities_repository_imp.dart';
 import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 import 'package:tasklist/src/layers/domain/usecases/set_entities_usecase.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -16,7 +18,7 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
   });
 
-  test('save settings cod is not null', () async {
+  test('save settings id is not null', () async {
     final Database db = await DB.instance.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
@@ -52,7 +54,7 @@ void main() async {
     expect(settingsDto.theme, 'dark');
   });
 
-  test('update settings cod when saved', () async {
+  test('update settings id when saved', () async {
     final Database db = await DB.instance.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
@@ -63,5 +65,45 @@ void main() async {
     settings = await setEntities.saveSettings(settings);
 
     expect(settings.id, isNotNull);
+  });
+
+  test('save tasklist id is not null', () async {
+    final Database db = await DB.instance.database;
+
+    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(db)));
+
+    TaskListEntity tasklist = TaskListEntity(name: 'Nova', taskboards: []);
+
+    tasklist = await setEntities.saveTasklist(tasklist);
+
+    expect(tasklist.id, isNotNull);
+  });
+
+  test('saved taskboard from tasklist id is not null', () async {
+    final Database db = await DB.instance.database;
+
+    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(db)));
+
+    TaskListEntity tasklist = TaskListEntity(
+      name: 'Nova',
+      taskboards: [],
+    );
+
+    tasklist = await setEntities.saveTasklist(tasklist);
+
+    TaskBoardEntity taskboard = TaskBoardEntity(
+      idTasklist: tasklist.id!,
+      name: 'Taskboard',
+      dateCreated: '28/03/2024-18:09',
+      tasks: [],
+      dateCompleted: [],
+    );
+
+    tasklist.taskboards.add(taskboard);
+
+    tasklist = await setEntities.saveTasklist(tasklist);
+    expect(tasklist.taskboards.length, 1);
   });
 }
