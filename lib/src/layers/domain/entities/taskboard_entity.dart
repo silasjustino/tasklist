@@ -2,7 +2,7 @@ import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 
 class TaskBoardEntity {
-  int id;
+  int? id;
   int idTasklist;
   String name;
   List<TaskEntity>? tasks;
@@ -11,7 +11,7 @@ class TaskBoardEntity {
   bool enabled = true;
 
   TaskBoardEntity({
-    required this.id,
+    this.id,
     required this.idTasklist,
     required this.name,
     this.tasks,

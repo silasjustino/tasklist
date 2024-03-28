@@ -5,13 +5,13 @@ enum SortMode { newest, oldest, byName }
 enum ViewMode { compacted, extended }
 
 class SettingsEntity {
-  int id;
+  int? id;
   ThemeMode themeMode = ThemeMode.dark;
   SortMode sortMode = SortMode.oldest;
   ViewMode viewMode = ViewMode.extended;
   String dateSyncronized = 'Não sincronizado';
 
   SettingsEntity({
-    required this.id,
+    this.id,
   });
 }

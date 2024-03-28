@@ -1,7 +1,7 @@
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 
 class TaskDto extends TaskEntity {
-  int cod;
+  int? cod;
   int codTaskboard;
   String descriptionDto;
   String dateCreatedDto;

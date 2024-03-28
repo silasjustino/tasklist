@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
 
 void main() {
-  SettingsEntity settings = SettingsEntity(id: 1);
+  SettingsEntity settings = SettingsEntity();
 
   test('settings entity not null', () {
     expect(settings, isNotNull);

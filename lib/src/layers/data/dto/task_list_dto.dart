@@ -3,7 +3,7 @@ import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 
 class TaskListDto extends TaskListEntity {
-  int cod;
+  int? cod;
   String nameDto;
   List<TaskBoardDto> taskboardsDto;
 

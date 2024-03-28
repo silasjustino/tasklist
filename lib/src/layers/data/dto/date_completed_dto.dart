@@ -1,7 +1,7 @@
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
 
 class DateCompletedDto extends DateCompletedEntity {
-  int cod;
+  int? cod;
   int codTaskboard;
   String dateCompletedDto;
 

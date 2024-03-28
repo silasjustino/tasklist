@@ -4,7 +4,7 @@ import 'package:tasklist/src/layers/data/dto/task_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 class TaskBoardDto extends TaskBoardEntity {
-  int cod;
+  int? cod;
   int codTasklist;
   String nameDto;
   String dateCreatedDto;
