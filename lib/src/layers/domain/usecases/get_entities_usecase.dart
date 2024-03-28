@@ -17,10 +17,10 @@ abstract class GetEntitiesUseCase {
   Future<List<TaskListEntity>> fetchListTasklist();
 }
 
-class GetEntitiesCaseImp implements GetEntitiesUseCase {
+class GetEntitiesUseCaseImp implements GetEntitiesUseCase {
   final GetEntitiesRepository _getTaskListRepository;
 
-  GetEntitiesCaseImp(this._getTaskListRepository);
+  GetEntitiesUseCaseImp(this._getTaskListRepository);
 
   @override
   Future<SettingsEntity> fetchSettings(int id) async {

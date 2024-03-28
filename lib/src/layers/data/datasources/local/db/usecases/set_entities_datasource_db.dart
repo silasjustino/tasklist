@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:sqflite/sqflite.dart';
 import 'package:tasklist/src/layers/data/datasources/interfaces/set_entities_datasource.dart';
-import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/queries/insert_db_query.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/queries/update_db_query.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
@@ -12,10 +11,12 @@ import 'package:tasklist/src/layers/data/dto/task_list_dto.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 
 class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
-  final Database _db = DB.instance.database;
+  final Database _db;
+
+  SetEntitiesDataSourceDB(this._db);
 
   @override
-  Future<bool> saveSettings(SettingsDto settings) async {
+  Future<SettingsDto> saveSettings(SettingsDto settings) async {
     final values = <dynamic>[
       settings.theme,
       settings.sort,
@@ -23,32 +24,33 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
       settings.date,
     ];
 
-    if (settings.cod == null) {
+    if (settings.id == null) {
       try {
-        _db.rawInsert(InsertDBQuery.settings, values);
+        int id = await _db.rawInsert(InsertDBQuery.settings, values);
 
-        return true;
+        settings.id = id;
+
+        return settings;
       } catch (e) {
         log('$e');
 
-        return false;
+        return settings;
       }
     } else {
-      values.add(settings.cod);
+      values.add(settings.id);
       try {
-        _db.rawUpdate(UpdateDBQuery.settings, values);
-
-        return true;
+        await _db.rawUpdate(UpdateDBQuery.settings, values);
+        return settings;
       } catch (e) {
         log('$e');
 
-        return false;
+        return settings;
       }
     }
   }
 
   @override
-  Future<bool> saveTask(TaskDto task) async {
+  Future<TaskDto> saveTask(TaskDto task) async {
     final values = <dynamic>[
       task.codTaskboard,
       task.descriptionDto,
@@ -57,63 +59,68 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
       task.completedDto,
     ];
 
-    if (task.cod == null) {
+    if (task.id == null) {
       try {
-        _db.rawInsert(InsertDBQuery.task, values);
+        int id = await _db.rawInsert(InsertDBQuery.task, values);
 
-        return true;
+        task.id = id;
+
+        return task;
       } catch (e) {
         log('$e');
 
-        return false;
+        return task;
       }
     } else {
-      values.add(task.cod);
+      values.add(task.id);
       try {
-        _db.rawUpdate(UpdateDBQuery.task, values);
+        await _db.rawUpdate(UpdateDBQuery.task, values);
 
-        return true;
+        return task;
       } catch (e) {
         log('$e');
 
-        return false;
+        return task;
       }
     }
   }
 
   @override
-  Future<bool> saveDateCompleted(DateCompletedDto dateCompleted) async {
+  Future<DateCompletedDto> saveDateCompleted(
+      DateCompletedDto dateCompleted) async {
     final values = <dynamic>[
       dateCompleted.codTaskboard,
       dateCompleted.dateCompletedDto,
     ];
 
-    if (dateCompleted.cod == null) {
+    if (dateCompleted.id == null) {
       try {
-        _db.rawInsert(InsertDBQuery.dateCompleted, values);
+        int id = await _db.rawInsert(InsertDBQuery.dateCompleted, values);
 
-        return true;
+        dateCompleted.id = id;
+
+        return dateCompleted;
       } catch (e) {
         log('$e');
 
-        return false;
+        return dateCompleted;
       }
     } else {
-      values.add(dateCompleted.cod);
+      values.add(dateCompleted.id);
       try {
-        _db.rawUpdate(UpdateDBQuery.dateCompleted, values);
+        await _db.rawUpdate(UpdateDBQuery.dateCompleted, values);
 
-        return true;
+        return dateCompleted;
       } catch (e) {
         log('$e');
 
-        return false;
+        return dateCompleted;
       }
     }
   }
 
   @override
-  Future<bool> saveTaskboard(TaskBoardDto taskboard) async {
+  Future<TaskBoardDto> saveTaskboard(TaskBoardDto taskboard) async {
     final values = <dynamic>[
       taskboard.codTasklist,
       taskboard.nameDto,
@@ -121,56 +128,60 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
       taskboard.enabledDto,
     ];
 
-    if (taskboard.cod == null) {
+    if (taskboard.id == null) {
       try {
-        _db.rawInsert(InsertDBQuery.taskboard, values);
+        int id = await _db.rawInsert(InsertDBQuery.taskboard, values);
 
-        return true;
+        taskboard.id = id;
+
+        return taskboard;
       } catch (e) {
         log('$e');
 
-        return false;
+        return taskboard;
       }
     } else {
-      values.add(taskboard.cod);
+      values.add(taskboard.id);
       try {
-        _db.rawUpdate(UpdateDBQuery.taskboard, values);
+        await _db.rawUpdate(UpdateDBQuery.taskboard, values);
 
-        return true;
+        return taskboard;
       } catch (e) {
         log('$e');
 
-        return false;
+        return taskboard;
       }
     }
   }
 
   @override
-  Future<bool> saveTasklist(TaskListDto tasklist) async {
+  Future<TaskListDto> saveTasklist(TaskListDto tasklist) async {
     final values = <dynamic>[
       tasklist.nameDto,
     ];
 
-    if (tasklist.cod == null) {
+    if (tasklist.id == null) {
       try {
-        _db.rawInsert(InsertDBQuery.tasklist, values);
+        int id = await _db.rawInsert(InsertDBQuery.tasklist, values);
 
-        return true;
+        tasklist.id = id;
+
+        return tasklist;
       } catch (e) {
         log('$e');
 
-        return false;
+        return tasklist;
       }
     } else {
-      values.add(tasklist.cod);
+      values.add(tasklist.id);
       try {
-        _db.rawUpdate(UpdateDBQuery.tasklist, values);
+        await _db.rawUpdate(UpdateDBQuery.tasklist, values);
 
-        return true;
+        return tasklist;
       } catch (e) {
         log('$e');
 
-        return false;
+        return tasklist;
       }
     }
   }

@@ -1,37 +1,40 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 
 class TaskListDto extends TaskListEntity {
-  int? cod;
   String nameDto;
   List<TaskBoardDto> taskboardsDto;
 
-  TaskListDto(
-    this.cod,
-    this.nameDto,
-    this.taskboardsDto,
-  ) : super(
+  TaskListDto({
+    int? cod,
+    required this.nameDto,
+    required this.taskboardsDto,
+  }) : super(
           id: cod,
           name: nameDto,
           taskboards: taskboardsDto,
         );
 
   static Future<TaskListDto> fromMap(Map map) async {
-    var getDB = GetEntitiesDataSourceDB();
+    final Database db = await DB.instance.database;
+
+    var getDB = GetEntitiesDataSourceDB(db);
 
     var taskboards = await getDB.fetchListTaskboard(map['cod']);
     //fetch das taskboards
     return TaskListDto(
-      map['cod'],
-      map['name'],
-      taskboards,
+      cod: map['cod'],
+      nameDto: map['name'],
+      taskboardsDto: taskboards,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'cod': cod,
+      'cod': id,
       'name': nameDto,
     };
   }
@@ -46,9 +49,9 @@ class TaskListDto extends TaskListEntity {
     }
 
     return TaskListDto(
-      tasklist.id,
-      tasklist.name,
-      taskboards,
+      cod: tasklist.id,
+      nameDto: tasklist.name,
+      taskboardsDto: taskboards,
     );
   }
 }

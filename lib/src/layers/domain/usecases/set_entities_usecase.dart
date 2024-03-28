@@ -6,11 +6,12 @@ import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 import 'package:tasklist/src/layers/domain/repositories/set_entities_repository.dart';
 
 abstract class SetEntitiesUseCase {
-  Future<bool> saveSettings(SettingsEntity settings);
-  Future<bool> saveTask(TaskEntity task);
-  Future<bool> saveDateCompleted(DateCompletedEntity dateCompleted);
-  Future<bool> saveTaskboard(TaskBoardEntity taskboard);
-  Future<bool> saveTasklist(TaskListEntity tasklist);
+  Future<SettingsEntity> saveSettings(SettingsEntity settings);
+  Future<TaskEntity> saveTask(TaskEntity task);
+  Future<DateCompletedEntity> saveDateCompleted(
+      DateCompletedEntity dateCompleted);
+  Future<TaskBoardEntity> saveTaskboard(TaskBoardEntity taskboard);
+  Future<TaskListEntity> saveTasklist(TaskListEntity tasklist);
 }
 
 class SetEntitiesUseCaseImp implements SetEntitiesUseCase {
@@ -19,27 +20,28 @@ class SetEntitiesUseCaseImp implements SetEntitiesUseCase {
   SetEntitiesUseCaseImp(this._setEntitiesRepository);
 
   @override
-  Future<bool> saveSettings(SettingsEntity settings) async {
+  Future<SettingsEntity> saveSettings(SettingsEntity settings) async {
     return await _setEntitiesRepository.saveSettings(settings);
   }
 
   @override
-  Future<bool> saveTask(TaskEntity task) async {
+  Future<TaskEntity> saveTask(TaskEntity task) async {
     return await _setEntitiesRepository.saveTask(task);
   }
 
   @override
-  Future<bool> saveDateCompleted(DateCompletedEntity dateCompleted) async {
+  Future<DateCompletedEntity> saveDateCompleted(
+      DateCompletedEntity dateCompleted) async {
     return await _setEntitiesRepository.saveDateCompleted(dateCompleted);
   }
 
   @override
-  Future<bool> saveTaskboard(TaskBoardEntity taskboard) async {
+  Future<TaskBoardEntity> saveTaskboard(TaskBoardEntity taskboard) async {
     return await _setEntitiesRepository.saveTaskboard(taskboard);
   }
 
   @override
-  Future<bool> saveTasklist(TaskListEntity tasklist) async {
+  Future<TaskListEntity> saveTasklist(TaskListEntity tasklist) async {
     return await _setEntitiesRepository.saveTasklist(tasklist);
   }
 }

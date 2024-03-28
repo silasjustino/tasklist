@@ -1,21 +1,20 @@
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 
 class TaskDto extends TaskEntity {
-  int? cod;
   int codTaskboard;
   String descriptionDto;
   String dateCreatedDto;
   String? dateCompletedDto;
   int completedDto;
 
-  TaskDto(
-    this.cod,
-    this.codTaskboard,
-    this.descriptionDto,
-    this.dateCreatedDto,
-    this.dateCompletedDto,
-    this.completedDto,
-  ) : super(
+  TaskDto({
+    int? cod,
+    required this.codTaskboard,
+    required this.descriptionDto,
+    required this.dateCreatedDto,
+    required this.dateCompletedDto,
+    required this.completedDto,
+  }) : super(
           id: cod,
           idTaskboard: codTaskboard,
           description: descriptionDto,
@@ -27,18 +26,18 @@ class TaskDto extends TaskEntity {
 
   factory TaskDto.fromMap(Map map) {
     return TaskDto(
-      map['cod'],
-      map['cod_taskboard'],
-      map['description'],
-      map['date_created'],
-      map['date_completed'],
-      map['completed'],
+      cod: map['cod'],
+      codTaskboard: map['cod_taskboard'],
+      descriptionDto: map['description'],
+      dateCreatedDto: map['date_created'],
+      dateCompletedDto: map['date_completed'],
+      completedDto: map['completed'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'cod': cod,
+      'cod': id,
       'cod_taskboard': codTaskboard,
       'description': descriptionDto,
       'date_created': dateCreatedDto,
@@ -49,12 +48,12 @@ class TaskDto extends TaskEntity {
 
   factory TaskDto.fromEntity(TaskEntity task) {
     return TaskDto(
-      task.id,
-      task.idTaskboard,
-      task.description,
-      task.dateCreated,
-      task.dateCompleted,
-      task.completed ? 1 : 0,
+      cod: task.id,
+      codTaskboard: task.idTaskboard,
+      descriptionDto: task.description,
+      dateCreatedDto: task.dateCreated,
+      dateCompletedDto: task.dateCompleted,
+      completedDto: task.completed ? 1 : 0,
     );
   }
 }

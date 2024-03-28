@@ -1,15 +1,14 @@
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
 
 class DateCompletedDto extends DateCompletedEntity {
-  int? cod;
   int codTaskboard;
   String dateCompletedDto;
 
-  DateCompletedDto(
-    this.cod,
-    this.codTaskboard,
-    this.dateCompletedDto,
-  ) : super(
+  DateCompletedDto({
+    int? cod,
+    required this.codTaskboard,
+    required this.dateCompletedDto,
+  }) : super(
           id: cod,
           idTaskboard: codTaskboard,
           dateCompleted: dateCompletedDto,
@@ -17,15 +16,15 @@ class DateCompletedDto extends DateCompletedEntity {
 
   factory DateCompletedDto.fromMap(Map map) {
     return DateCompletedDto(
-      map['cod'],
-      map['cod_taskboard'],
-      map['date_completed'],
+      cod: map['cod'],
+      codTaskboard: map['cod_taskboard'],
+      dateCompletedDto: map['date_completed'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'cod': cod,
+      'cod': id,
       'cod_taskboard': codTaskboard,
       'date_completed': dateCompletedDto,
     };
@@ -33,9 +32,9 @@ class DateCompletedDto extends DateCompletedEntity {
 
   factory DateCompletedDto.fromEntity(DateCompletedEntity dateCompleted) {
     return DateCompletedDto(
-      dateCompleted.id,
-      dateCompleted.idTaskboard,
-      dateCompleted.dateCompleted,
+      cod: dateCompleted.id,
+      codTaskboard: dateCompleted.idTaskboard,
+      dateCompletedDto: dateCompleted.dateCompleted,
     );
   }
 }

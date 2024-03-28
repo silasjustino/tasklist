@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
 
 class SettingsDto extends SettingsEntity {
-  int? cod;
   String theme;
   String sort;
   String view;
   String date;
 
-  SettingsDto(
-    this.cod,
-    this.theme,
-    this.sort,
-    this.view,
-    this.date,
-  ) : super(id: cod) {
+  SettingsDto({
+    int? cod,
+    required this.theme,
+    required this.sort,
+    required this.view,
+    required this.date,
+  }) : super(id: cod) {
     if (theme == ThemeMode.light.name) {
       themeMode = ThemeMode.light;
     } else if (theme == ThemeMode.dark.name) {
@@ -40,17 +39,17 @@ class SettingsDto extends SettingsEntity {
 
   factory SettingsDto.fromMap(Map map) {
     return SettingsDto(
-      map['cod'],
-      map['theme_mode'],
-      map['sort_mode'],
-      map['view_mode'],
-      map['date_sync'],
+      cod: map['cod'],
+      theme: map['theme_mode'],
+      sort: map['sort_mode'],
+      view: map['view_mode'],
+      date: map['date_sync'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'cod': cod,
+      'cod': id,
       'theme_mode': theme,
       'sort_mode': sort,
       'view_mode': view,
@@ -60,11 +59,11 @@ class SettingsDto extends SettingsEntity {
 
   factory SettingsDto.fromEntity(SettingsEntity settings) {
     return SettingsDto(
-      settings.id,
-      settings.themeMode.name,
-      settings.sortMode.name,
-      settings.viewMode.name,
-      settings.dateSyncronized,
+      cod: settings.id,
+      theme: settings.themeMode.name,
+      sort: settings.sortMode.name,
+      view: settings.viewMode.name,
+      date: settings.dateSyncronized,
     );
   }
 }

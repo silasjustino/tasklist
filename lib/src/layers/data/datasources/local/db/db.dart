@@ -13,9 +13,9 @@ class DB {
   static Database? _database;
 
   // DB getter, if not null return the database, if null create with init method
-  get database async {
+  Future<Database> get database async {
     if (_database != null) {
-      return _database;
+      return _database!;
     } else {
       return await _initDatabase();
     }

@@ -5,9 +5,10 @@ import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 abstract class SetEntitiesRepository {
-  Future<bool> saveSettings(SettingsEntity settings);
-  Future<bool> saveTask(TaskEntity task);
-  Future<bool> saveDateCompleted(DateCompletedEntity dateCompleted);
-  Future<bool> saveTaskboard(TaskBoardEntity taskboard);
-  Future<bool> saveTasklist(TaskListEntity tasklist);
+  Future<SettingsEntity> saveSettings(SettingsEntity settings);
+  Future<TaskEntity> saveTask(TaskEntity task);
+  Future<DateCompletedEntity> saveDateCompleted(
+      DateCompletedEntity dateCompleted);
+  Future<TaskBoardEntity> saveTaskboard(TaskBoardEntity taskboard);
+  Future<TaskListEntity> saveTasklist(TaskListEntity tasklist);
 }

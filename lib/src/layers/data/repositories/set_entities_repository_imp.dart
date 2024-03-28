@@ -17,35 +17,36 @@ class SetEntitiesRepositoryImp implements SetEntitiesRepository {
   SetEntitiesRepositoryImp(this._setEntitiesDataSource);
 
   @override
-  Future<bool> saveSettings(SettingsEntity settings) async {
+  Future<SettingsEntity> saveSettings(SettingsEntity settings) async {
     final settingsDto = SettingsDto.fromEntity(settings);
 
     return await _setEntitiesDataSource.saveSettings(settingsDto);
   }
 
   @override
-  Future<bool> saveTask(TaskEntity task) async {
+  Future<TaskEntity> saveTask(TaskEntity task) async {
     final taskDto = TaskDto.fromEntity(task);
 
     return await _setEntitiesDataSource.saveTask(taskDto);
   }
 
   @override
-  Future<bool> saveDateCompleted(DateCompletedEntity dateCompleted) async {
+  Future<DateCompletedEntity> saveDateCompleted(
+      DateCompletedEntity dateCompleted) async {
     final dateCompletedDto = DateCompletedDto.fromEntity(dateCompleted);
 
     return await _setEntitiesDataSource.saveDateCompleted(dateCompletedDto);
   }
 
   @override
-  Future<bool> saveTaskboard(TaskBoardEntity taskboard) async {
+  Future<TaskBoardEntity> saveTaskboard(TaskBoardEntity taskboard) async {
     final taskboardDto = TaskBoardDto.fromEntity(taskboard);
 
     return await _setEntitiesDataSource.saveTaskboard(taskboardDto);
   }
 
   @override
-  Future<bool> saveTasklist(TaskListEntity tasklist) async {
+  Future<TaskListEntity> saveTasklist(TaskListEntity tasklist) async {
     final tasklistDto = TaskListDto.fromEntity(tasklist);
 
     return await _setEntitiesDataSource.saveTasklist(tasklistDto);

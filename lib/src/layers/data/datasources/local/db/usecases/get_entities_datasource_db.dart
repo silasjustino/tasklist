@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tasklist/src/layers/data/datasources/interfaces/get_entities_datasource.dart';
-import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
 import 'package:tasklist/src/layers/data/dto/settings_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
@@ -8,7 +7,9 @@ import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_list_dto.dart';
 
 class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
-  final Database _db = DB.instance.database;
+  final Database _db;
+
+  GetEntitiesDataSourceDB(this._db);
 
   @override
   Future<SettingsDto> fetchSettings(int id) async {

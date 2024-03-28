@@ -1,10 +1,11 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
 class TaskBoardDto extends TaskBoardEntity {
-  int? cod;
   int codTasklist;
   String nameDto;
   String dateCreatedDto;
@@ -12,15 +13,15 @@ class TaskBoardDto extends TaskBoardEntity {
   List<TaskDto> tasksDto;
   List<DateCompletedDto> dateCompletedDto;
 
-  TaskBoardDto(
-    this.cod,
-    this.codTasklist,
-    this.nameDto,
-    this.dateCreatedDto,
-    this.enabledDto,
-    this.tasksDto,
-    this.dateCompletedDto,
-  ) : super(
+  TaskBoardDto({
+    int? cod,
+    required this.codTasklist,
+    required this.nameDto,
+    required this.dateCreatedDto,
+    required this.enabledDto,
+    required this.tasksDto,
+    required this.dateCompletedDto,
+  }) : super(
           id: cod,
           idTasklist: codTasklist,
           name: nameDto,
@@ -32,25 +33,27 @@ class TaskBoardDto extends TaskBoardEntity {
   }
 
   static Future<TaskBoardDto> fromMap(Map map) async {
-    var getDB = GetEntitiesDataSourceDB();
+    final Database db = await DB.instance.database;
+
+    var getDB = GetEntitiesDataSourceDB(db);
 
     var tasks = await getDB.fetchListTask(map['cod']);
     var dateCompleted = await getDB.fetchListDateCompleted(map['cod']);
 
     return TaskBoardDto(
-      map['cod'],
-      map['cod_tasklist'],
-      map['name'],
-      map['date_created'],
-      map['enabled'],
-      tasks,
-      dateCompleted,
+      cod: map['cod'],
+      codTasklist: map['cod_tasklist'],
+      nameDto: map['name'],
+      dateCreatedDto: map['date_created'],
+      enabledDto: map['enabled'],
+      tasksDto: tasks,
+      dateCompletedDto: dateCompleted,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'cod': cod,
+      'cod': id,
       'cod_tasklist': codTasklist,
       'name': nameDto,
       'date_created': dateCreatedDto,
@@ -76,13 +79,13 @@ class TaskBoardDto extends TaskBoardEntity {
     }
 
     return TaskBoardDto(
-      taskboard.id,
-      taskboard.idTasklist,
-      taskboard.name,
-      taskboard.dateCreated,
-      taskboard.enabled ? 1 : 0,
-      tasks,
-      dateCompleted,
+      cod: taskboard.id,
+      codTasklist: taskboard.idTasklist,
+      nameDto: taskboard.name,
+      dateCreatedDto: taskboard.dateCreated,
+      enabledDto: taskboard.enabled ? 1 : 0,
+      tasksDto: tasks,
+      dateCompletedDto: dateCompleted,
     );
   }
 }

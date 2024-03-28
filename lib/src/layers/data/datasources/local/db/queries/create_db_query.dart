@@ -21,10 +21,11 @@ class CreateDBQuery {
   static String get taskboard => '''
     CREATE TABLE taskboard (
       cod INTEGER PRIMARY KEY AUTOINCREMENT,
-      FOREIGN KEY(cod_tasklist) REFERENCES tasklist(cod),
+      cod_tasklist INTEGER,
       name TEXT,
       date_created TEXT,
-      enabled INTEGER DEFAULT 0
+      enabled INTEGER DEFAULT 0,
+      FOREIGN KEY(cod_tasklist) REFERENCES tasklist(cod)
     );
 
   ''';
@@ -32,8 +33,9 @@ class CreateDBQuery {
   static String get dateCompleted => '''
     CREATE TABLE date_completed (
         cod INTEGER PRIMARY KEY AUTOINCREMENT,
-        FOREIGN KEY(cod_taskboard) REFERENCES taskboard(cod),
-        date_completed TEXT
+        cod_taskboard INTEGER,
+        date_completed TEXT,
+        FOREIGN KEY(cod_taskboard) REFERENCES taskboard(cod)
     );
 
   ''';
@@ -41,11 +43,12 @@ class CreateDBQuery {
   static String get task => '''
     CREATE TABLE task (
       cod INTEGER PRIMARY KEY AUTOINCREMENT,
-      FOREIGN KEY(cod_taskboard) REFERENCES taskboard(cod),
+      cod_taskboard INTEGER,
       description TEXT,
       date_created TEXT,
       date_completed TEXT,
-      completed INTEGER DEFAULT 0
+      completed INTEGER DEFAULT 0,
+      FOREIGN KEY(cod_taskboard) REFERENCES taskboard(cod)
     );
   
   ''';
