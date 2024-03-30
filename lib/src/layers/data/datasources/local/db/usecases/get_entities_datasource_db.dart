@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:tasklist/src/layers/data/datasources/interfaces/get_entities_datasource.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
@@ -12,7 +14,7 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
   GetEntitiesDataSourceDB(this._db);
 
   @override
-  Future<SettingsDto> fetchSettings(int id) async {
+  Future<SettingsDto?> fetchSettings(int id) async {
     var maps = await _db.query(
       'settings',
       where: 'cod = ?',
@@ -20,11 +22,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       limit: 1,
     );
 
-    return SettingsDto.fromMap(maps.first);
+    try {
+      return SettingsDto.fromMap(maps.first);
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<TaskDto> fetchTask(int id) async {
+  Future<TaskDto?> fetchTask(int id) async {
     var maps = await _db.query(
       'task',
       where: 'cod = ?',
@@ -32,11 +39,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       limit: 1,
     );
 
-    return TaskDto.fromMap(maps.first);
+    try {
+      return TaskDto.fromMap(maps.first);
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<List<TaskDto>> fetchListTask(int id) async {
+  Future<List<TaskDto>?> fetchListTask(int id) async {
     var maps = await _db.query(
       'task',
       where: 'cod_taskboard = ?',
@@ -49,11 +61,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       tasks.add(TaskDto.fromMap(maps[i]));
     }
 
-    return tasks;
+    try {
+      return tasks;
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<DateCompletedDto> fetchDateCompleted(int id) async {
+  Future<DateCompletedDto?> fetchDateCompleted(int id) async {
     var maps = await _db.query(
       'date_completed',
       where: 'cod = ?',
@@ -61,11 +78,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       limit: 1,
     );
 
-    return DateCompletedDto.fromMap(maps.first);
+    try {
+      return DateCompletedDto.fromMap(maps.first);
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<List<DateCompletedDto>> fetchListDateCompleted(int id) async {
+  Future<List<DateCompletedDto>?> fetchListDateCompleted(int id) async {
     var maps = await _db.query(
       'date_completed',
       where: 'cod_taskboard = ?',
@@ -78,11 +100,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       datesCompleted.add(DateCompletedDto.fromMap(maps[i]));
     }
 
-    return datesCompleted;
+    try {
+      return datesCompleted;
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<TaskBoardDto> fetchTaskboard(int id) async {
+  Future<TaskBoardDto?> fetchTaskboard(int id) async {
     List<Map> maps = await _db.query(
       'taskboard',
       where: 'cod = ?',
@@ -90,11 +117,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       limit: 1,
     );
 
-    return TaskBoardDto.fromMap(maps.first);
+    try {
+      return TaskBoardDto.fromMap(maps.first);
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<List<TaskBoardDto>> fetchListTaskboard(int id) async {
+  Future<List<TaskBoardDto>?> fetchListTaskboard(int id) async {
     var maps = await _db.query(
       'taskboard',
       where: 'cod_tasklist = ?',
@@ -107,11 +139,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       taskboards.add(await TaskBoardDto.fromMap(maps[i]));
     }
 
-    return taskboards;
+    try {
+      return taskboards;
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<TaskListDto> fetchTasklist(int id) async {
+  Future<TaskListDto?> fetchTasklist(int id) async {
     List<Map> maps = await _db.query(
       'tasklist',
       where: 'cod = ?',
@@ -119,11 +156,16 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       limit: 1,
     );
 
-    return TaskListDto.fromMap(maps.first);
+    try {
+      return TaskListDto.fromMap(maps.first);
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 
   @override
-  Future<List<TaskListDto>> fetchListTasklist() async {
+  Future<List<TaskListDto>?> fetchListTasklist() async {
     var maps = await _db.query('tasklist');
 
     List<TaskListDto> tasklists = [];
@@ -132,6 +174,11 @@ class GetEntitiesDataSourceDB implements GetEntitiesDataSource {
       tasklists.add(await TaskListDto.fromMap(maps[i]));
     }
 
-    return tasklists;
+    try {
+      return tasklists;
+    } catch (e) {
+      log('$e');
+      return null;
+    }
   }
 }

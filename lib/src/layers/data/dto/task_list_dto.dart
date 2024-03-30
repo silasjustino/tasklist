@@ -29,7 +29,7 @@ class TaskListDto extends TaskListEntity {
     return TaskListDto(
       cod: map['cod'],
       nameDto: map['name'],
-      taskboardsDto: taskboards,
+      taskboardsDto: taskboards!,
     );
   }
 

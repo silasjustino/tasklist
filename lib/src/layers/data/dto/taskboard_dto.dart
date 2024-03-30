@@ -48,8 +48,8 @@ class TaskBoardDto extends TaskBoardEntity {
       nameDto: map['name'],
       dateCreatedDto: map['date_created'],
       enabledDto: map['enabled'],
-      tasksDto: tasks,
-      dateCompletedDto: dateCompleted,
+      tasksDto: tasks!,
+      dateCompletedDto: dateCompleted!,
     );
   }
 

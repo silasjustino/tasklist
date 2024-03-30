@@ -21,14 +21,23 @@ class DB {
     }
   }
 
+  Future<String> get _path async {
+    return join(await getDatabasesPath(), 'tasklist_app.db');
+  }
+
   // init method, return openDatabase getting the path
   //where the DB is, has method onCreate
   _initDatabase() async {
     return await openDatabase(
-      join(await getDatabasesPath(), 'tasklist_app.db'),
+      await _path,
       version: 1,
       onCreate: _onCreate,
     );
+  }
+
+  //delete database method (careful)
+  Future<void> deleteDB() async {
+    await deleteDatabase(await _path);
   }
 
   // Method onCreate executes DDLs of create tables

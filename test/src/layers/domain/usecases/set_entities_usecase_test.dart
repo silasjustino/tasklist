@@ -19,16 +19,18 @@ void main() async {
   });
 
   test('save settings id is not null', () async {
-    final Database db = await DB.instance.database;
+    final DB db = DB.instance;
+    db.deleteDB();
+    final Database database = await db.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(db)));
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
 
     SettingsEntity settings = SettingsEntity();
 
     settings = await setEntities.saveSettings(settings);
 
-    var maps = await db.query('settings');
+    var maps = await database.query('settings');
 
     SettingsDto settingsDto = SettingsDto.fromMap(maps.first);
 
@@ -38,16 +40,18 @@ void main() async {
   });
 
   test('save settings theme is dark', () async {
-    final Database db = await DB.instance.database;
+    final DB db = DB.instance;
+    db.deleteDB();
+    final Database database = await db.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(db)));
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
 
     SettingsEntity settings = SettingsEntity();
 
     settings = await setEntities.saveSettings(settings);
 
-    var maps = await db.query('settings');
+    var maps = await database.query('settings');
 
     SettingsDto settingsDto = SettingsDto.fromMap(maps.first);
 
@@ -55,10 +59,12 @@ void main() async {
   });
 
   test('update settings id when saved', () async {
-    final Database db = await DB.instance.database;
+    final DB db = DB.instance;
+    db.deleteDB();
+    final Database database = await db.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(db)));
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
 
     SettingsEntity settings = SettingsEntity();
 
@@ -68,10 +74,12 @@ void main() async {
   });
 
   test('save tasklist id is not null', () async {
-    final Database db = await DB.instance.database;
+    final DB db = DB.instance;
+    db.deleteDB();
+    final Database database = await db.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(db)));
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
 
     TaskListEntity tasklist = TaskListEntity(name: 'Nova', taskboards: []);
 
@@ -81,10 +89,12 @@ void main() async {
   });
 
   test('saved taskboard from tasklist id is not null', () async {
-    final Database db = await DB.instance.database;
+    final DB db = DB.instance;
+    db.deleteDB();
+    final Database database = await db.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(db)));
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
 
     TaskListEntity tasklist = TaskListEntity(
       name: 'Nova',

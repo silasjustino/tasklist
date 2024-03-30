@@ -6,15 +6,15 @@ import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 import 'package:tasklist/src/layers/domain/repositories/get_entities_repository.dart';
 
 abstract class GetEntitiesUseCase {
-  Future<SettingsEntity> fetchSettings(int id);
-  Future<TaskEntity> fetchTask(int id);
-  Future<List<TaskEntity>> fetchListTask(int id);
-  Future<DateCompletedEntity> fetchDateCompleted(int id);
-  Future<List<DateCompletedEntity>> fetchListDateCompleted(int id);
-  Future<TaskBoardEntity> fetchTaskboard(int id);
-  Future<List<TaskBoardEntity>> fetchListTaskboard(int id);
-  Future<TaskListEntity> fetchTasklist(int id);
-  Future<List<TaskListEntity>> fetchListTasklist();
+  Future<SettingsEntity?> fetchSettings(int id);
+  Future<TaskEntity?> fetchTask(int id);
+  Future<List<TaskEntity>?> fetchListTask(int id);
+  Future<DateCompletedEntity?> fetchDateCompleted(int id);
+  Future<List<DateCompletedEntity>?> fetchListDateCompleted(int id);
+  Future<TaskBoardEntity?> fetchTaskboard(int id);
+  Future<List<TaskBoardEntity>?> fetchListTaskboard(int id);
+  Future<TaskListEntity?> fetchTasklist(int id);
+  Future<List<TaskListEntity>?> fetchListTasklist();
 }
 
 class GetEntitiesUseCaseImp implements GetEntitiesUseCase {
@@ -23,47 +23,47 @@ class GetEntitiesUseCaseImp implements GetEntitiesUseCase {
   GetEntitiesUseCaseImp(this._getTaskListRepository);
 
   @override
-  Future<SettingsEntity> fetchSettings(int id) async {
+  Future<SettingsEntity?> fetchSettings(int id) async {
     return await _getTaskListRepository.fetchSettings(id);
   }
 
   @override
-  Future<TaskEntity> fetchTask(int id) async {
+  Future<TaskEntity?> fetchTask(int id) async {
     return await _getTaskListRepository.fetchTask(id);
   }
 
   @override
-  Future<List<TaskEntity>> fetchListTask(int id) async {
+  Future<List<TaskEntity>?> fetchListTask(int id) async {
     return await _getTaskListRepository.fetchListTask(id);
   }
 
   @override
-  Future<DateCompletedEntity> fetchDateCompleted(int id) async {
+  Future<DateCompletedEntity?> fetchDateCompleted(int id) async {
     return await _getTaskListRepository.fetchDateCompleted(id);
   }
 
   @override
-  Future<List<DateCompletedEntity>> fetchListDateCompleted(int id) async {
+  Future<List<DateCompletedEntity>?> fetchListDateCompleted(int id) async {
     return await _getTaskListRepository.fetchListDateCompleted(id);
   }
 
   @override
-  Future<TaskBoardEntity> fetchTaskboard(int id) async {
+  Future<TaskBoardEntity?> fetchTaskboard(int id) async {
     return await _getTaskListRepository.fetchTaskboard(id);
   }
 
   @override
-  Future<List<TaskBoardEntity>> fetchListTaskboard(int id) async {
+  Future<List<TaskBoardEntity>?> fetchListTaskboard(int id) async {
     return await _getTaskListRepository.fetchListTaskboard(id);
   }
 
   @override
-  Future<TaskListEntity> fetchTasklist(int id) async {
+  Future<TaskListEntity?> fetchTasklist(int id) async {
     return await _getTaskListRepository.fetchTasklist(id);
   }
 
   @override
-  Future<List<TaskListEntity>> fetchListTasklist() async {
+  Future<List<TaskListEntity>?> fetchListTasklist() async {
     return await _getTaskListRepository.fetchListTasklist();
   }
 }
