@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
@@ -75,7 +77,6 @@ void main() async {
     TaskBoardEntity taskboard = TaskBoardEntity(
       idTasklist: tasklist.id!,
       name: 'Taskboard',
-      dateCreated: '28/03/2024-18:09',
       tasks: [],
       dateCompleted: [],
     );
@@ -90,5 +91,39 @@ void main() async {
     tasklist = await getEntities.fetchTasklist(tasklist.id!);
 
     expect(tasklist!.id, isNotNull);
+  });
+
+  test('fetch taskboard date_created recovered sucessfully', () async {
+    final DB db = DB.instance;
+    db.deleteDB();
+    final Database database = await db.database;
+
+    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
+        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
+
+    TaskListEntity? tasklist = TaskListEntity(name: 'Test', taskboards: []);
+
+    tasklist = await setEntities.saveTasklist(tasklist);
+
+    TaskBoardEntity taskboard = TaskBoardEntity(
+      idTasklist: tasklist.id!,
+      name: 'Taskboard',
+      tasks: [],
+      dateCompleted: [],
+    );
+
+    tasklist.taskboards.add(taskboard);
+
+    tasklist = await setEntities.saveTasklist(tasklist);
+
+    final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
+        GetEntitiesRepositoryImp(GetEntitiesDataSourceDB(database)));
+
+    tasklist = await getEntities.fetchTasklist(tasklist.id!);
+
+    print(
+        "Taskboard from Tasklist dateCreated: ${tasklist!.taskboards.first.dateCreated}");
+
+    expect(tasklist.taskboards.first.dateCreated, isNotNull);
   });
 }

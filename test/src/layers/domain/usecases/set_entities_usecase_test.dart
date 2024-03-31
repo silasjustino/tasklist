@@ -106,7 +106,6 @@ void main() async {
     TaskBoardEntity taskboard = TaskBoardEntity(
       idTasklist: tasklist.id!,
       name: 'Taskboard',
-      dateCreated: '28/03/2024-18:09',
       tasks: [],
       dateCompleted: [],
     );

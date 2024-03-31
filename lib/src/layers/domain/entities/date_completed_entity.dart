@@ -1,11 +1,14 @@
+import 'package:intl/intl.dart';
+
 class DateCompletedEntity {
   int? id;
   int idTaskboard;
-  String dateCompleted;
+  String dateCompleted = '';
 
   DateCompletedEntity({
     this.id,
     required this.idTaskboard,
-    required this.dateCompleted,
-  });
+  }) {
+    dateCompleted = DateFormat('dd/MM/yyyy - HH:mm').format(DateTime.now());
+  }
 }

@@ -28,9 +28,9 @@ class TaskBoardDto extends TaskBoardEntity {
           idTasklist: codTasklist,
           name: nameDto,
           tasks: tasksDto,
-          dateCreated: dateCreatedDto,
           dateCompleted: dateCompletedDto,
         ) {
+    dateCreated = dateCreatedDto;
     enabledDto == 0 ? enabled = false : enabled = true;
   }
 

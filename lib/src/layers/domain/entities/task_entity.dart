@@ -1,8 +1,10 @@
+import 'package:intl/intl.dart';
+
 class TaskEntity {
   int? id;
   int idTaskboard;
   String description;
-  String dateCreated;
+  String dateCreated = '';
   String? dateCompleted;
   bool completed = false;
 
@@ -10,7 +12,12 @@ class TaskEntity {
     this.id,
     required this.idTaskboard,
     required this.description,
-    required this.dateCreated,
-    this.dateCompleted,
-  });
+  }) {
+    dateCreated = DateFormat('dd/MM/yyyy - HH:mm').format(DateTime.now());
+  }
+
+  void completeTask() {
+    completed = true;
+    dateCompleted = DateFormat('dd/MM/yyyy - HH:mm').format(DateTime.now());
+  }
 }

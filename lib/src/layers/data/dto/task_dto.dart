@@ -18,9 +18,13 @@ class TaskDto extends TaskEntity {
           id: cod,
           idTaskboard: codTaskboard,
           description: descriptionDto,
-          dateCreated: dateCreatedDto,
-          dateCompleted: dateCompletedDto,
         ) {
+    dateCreated = dateCreatedDto;
+
+    if (dateCompletedDto != null) {
+      dateCompleted = dateCompletedDto!;
+    }
+
     completedDto == 0 ? completed = false : completed = true;
   }
 

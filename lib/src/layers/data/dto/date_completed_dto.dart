@@ -11,8 +11,9 @@ class DateCompletedDto extends DateCompletedEntity {
   }) : super(
           id: cod,
           idTaskboard: codTaskboard,
-          dateCompleted: dateCompletedDto,
-        );
+        ) {
+    dateCompleted = dateCompletedDto;
+  }
 
   factory DateCompletedDto.fromMap(Map map) {
     return DateCompletedDto(
