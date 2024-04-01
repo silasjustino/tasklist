@@ -1,4 +1,4 @@
-import 'dart:developer';
+// ignore_for_file: avoid_print
 
 import 'package:sqflite/sqflite.dart';
 import 'package:tasklist/src/layers/data/datasources/interfaces/set_entities_datasource.dart';
@@ -34,27 +34,26 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
     ];
 
     if (settings.id == null) {
-      try {
-        int id = await _db.rawInsert(InsertDBQuery.settings, values);
+      int id = await _db.rawInsert(InsertDBQuery.settings, values);
 
-        settings.id = id;
-
-        return settings;
-      } catch (e) {
-        log('$e');
-
+      if (id == 0) {
+        print("Settings not inserted.");
         return settings;
       }
+
+      settings.id = id;
+
+      return settings;
     } else {
       values.add(settings.id);
-      try {
-        await _db.rawUpdate(UpdateDBQuery.settings, values);
-        return settings;
-      } catch (e) {
-        log('$e');
 
-        return settings;
+      int changes = await _db.rawUpdate(UpdateDBQuery.settings, values);
+
+      if (changes == 0) {
+        print("Settings not updated.");
       }
+
+      return settings;
     }
   }
 
@@ -69,28 +68,26 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
     ];
 
     if (task.id == null) {
-      try {
-        int id = await _db.rawInsert(InsertDBQuery.task, values);
+      int id = await _db.rawInsert(InsertDBQuery.task, values);
 
-        task.id = id;
-
-        return task;
-      } catch (e) {
-        log('$e');
-
+      if (id == 0) {
+        print("Task not inserted.");
         return task;
       }
+
+      task.id = id;
+
+      return task;
     } else {
       values.add(task.id);
-      try {
-        await _db.rawUpdate(UpdateDBQuery.task, values);
 
-        return task;
-      } catch (e) {
-        log('$e');
+      int changes = await _db.rawUpdate(UpdateDBQuery.task, values);
 
-        return task;
+      if (changes == 0) {
+        print("Task not updated.");
       }
+
+      return task;
     }
   }
 
@@ -103,28 +100,26 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
     ];
 
     if (dateCompleted.id == null) {
-      try {
-        int id = await _db.rawInsert(InsertDBQuery.dateCompleted, values);
+      int id = await _db.rawInsert(InsertDBQuery.dateCompleted, values);
 
-        dateCompleted.id = id;
-
-        return dateCompleted;
-      } catch (e) {
-        log('$e');
-
+      if (id == 0) {
+        print("DateCompleted not inserted.");
         return dateCompleted;
       }
+
+      dateCompleted.id = id;
+
+      return dateCompleted;
     } else {
       values.add(dateCompleted.id);
-      try {
-        await _db.rawUpdate(UpdateDBQuery.dateCompleted, values);
 
-        return dateCompleted;
-      } catch (e) {
-        log('$e');
+      int changes = await _db.rawUpdate(UpdateDBQuery.dateCompleted, values);
 
-        return dateCompleted;
+      if (changes == 0) {
+        print("DateCompleted not updated.");
       }
+
+      return dateCompleted;
     }
   }
 
@@ -152,28 +147,26 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
     }
 
     if (taskboard.id == null) {
-      try {
-        int id = await _db.rawInsert(InsertDBQuery.taskboard, values);
+      int id = await _db.rawInsert(InsertDBQuery.taskboard, values);
 
-        taskboard.id = id;
-
-        return taskboard;
-      } catch (e) {
-        log('$e');
-
+      if (id == 0) {
+        print("Taskboard not inserted.");
         return taskboard;
       }
+
+      taskboard.id = id;
+
+      return taskboard;
     } else {
       values.add(taskboard.id);
-      try {
-        await _db.rawUpdate(UpdateDBQuery.taskboard, values);
 
-        return taskboard;
-      } catch (e) {
-        log('$e');
+      int changes = await _db.rawUpdate(UpdateDBQuery.taskboard, values);
 
-        return taskboard;
+      if (changes == 0) {
+        print("Taskboard not updated.");
       }
+
+      return taskboard;
     }
   }
 
@@ -191,28 +184,26 @@ class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
     }
 
     if (tasklist.id == null) {
-      try {
-        int id = await _db.rawInsert(InsertDBQuery.tasklist, values);
+      int id = await _db.rawInsert(InsertDBQuery.tasklist, values);
 
-        tasklist.id = id;
-
-        return tasklist;
-      } catch (e) {
-        log('$e');
-
+      if (id == 0) {
+        print("Tasklist not inserted.");
         return tasklist;
       }
+
+      tasklist.id = id;
+
+      return tasklist;
     } else {
       values.add(tasklist.id);
-      try {
-        await _db.rawUpdate(UpdateDBQuery.tasklist, values);
 
-        return tasklist;
-      } catch (e) {
-        log('$e');
+      int changes = await _db.rawUpdate(UpdateDBQuery.tasklist, values);
 
-        return tasklist;
+      if (changes == 0) {
+        print("Tasklist not updated.");
       }
+
+      return tasklist;
     }
   }
 }
