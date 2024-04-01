@@ -1,5 +1,3 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
@@ -20,9 +18,7 @@ class TaskListDto extends TaskListEntity {
         );
 
   static Future<TaskListDto> fromMap(Map map) async {
-    final Database db = await DB.instance.database;
-
-    var getDB = GetEntitiesDataSourceDB(db);
+    var getDB = await GetEntitiesDataSourceDB.create();
 
     var taskboards = await getDB.fetchListTaskboard(map['cod']);
     //fetch das taskboards

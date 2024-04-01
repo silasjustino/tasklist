@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -16,18 +16,18 @@ void main() {
     sqfliteFfiInit();
 
     databaseFactory = databaseFactoryFfi;
+    final DB db = DB.instance;
+    db.deleteDB();
   });
 
   test('Deleted corrected line', () async {
-    final DB db = DB.instance;
-    db.deleteDB();
-    final Database database = await db.database;
+    final Database database = await DB.instance.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
+        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
 
     final DeleteEntitiesUseCase deleteEntities = DeleteEntitiesUseCaseImp(
-        DeleteEntitiesRepositoryImp(DeleteEntitiesDataSourceDB(database)));
+        DeleteEntitiesRepositoryImp(await DeleteEntitiesDataSourceDB.create()));
 
     SettingsEntity? settings = SettingsEntity();
 

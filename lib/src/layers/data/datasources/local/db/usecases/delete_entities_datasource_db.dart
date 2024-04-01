@@ -1,10 +1,19 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tasklist/src/layers/data/datasources/interfaces/delete_entities_datasource.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 
 class DeleteEntitiesDataSourceDB implements DeleteEntitiesDataSource {
-  final Database _db;
+  late Database _db;
 
-  DeleteEntitiesDataSourceDB(this._db);
+  DeleteEntitiesDataSourceDB._();
+
+  static Future<DeleteEntitiesDataSourceDB> create() async {
+    var entity = DeleteEntitiesDataSourceDB._();
+
+    entity._db = await DB.instance.database;
+
+    return entity;
+  }
 
   @override
   Future<int> deleteSettings(int id) async {

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
@@ -18,24 +18,24 @@ void main() async {
     sqfliteFfiInit();
 
     databaseFactory = databaseFactoryFfi;
+    final DB db = DB.instance;
+    db.deleteDB();
   });
 
   //for testing purposes
 
   test('fetch settings cod is not null', () async {
-    final DB db = DB.instance;
-    db.deleteDB();
-    final Database database = await db.database;
+    final Database database = await DB.instance.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
+        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
 
     SettingsEntity? settings = SettingsEntity();
 
     settings = await setEntities.saveSettings(settings);
 
     final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(GetEntitiesDataSourceDB(database)));
+        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
 
     settings = await getEntities.fetchSettings(settings.id!);
 
@@ -43,19 +43,17 @@ void main() async {
   });
 
   test('fetch settings theme is dark', () async {
-    final DB db = DB.instance;
-    db.deleteDB();
-    final Database database = await db.database;
+    final Database database = await DB.instance.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
+        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
 
     SettingsEntity? settings = SettingsEntity();
 
     settings = await setEntities.saveSettings(settings);
 
     final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(GetEntitiesDataSourceDB(database)));
+        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
 
     settings = await getEntities.fetchSettings(settings.id!);
 
@@ -63,12 +61,10 @@ void main() async {
   });
 
   test('fetch tasklist cod when saved', () async {
-    final DB db = DB.instance;
-    db.deleteDB();
-    final Database database = await db.database;
+    final Database database = await DB.instance.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
+        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
 
     TaskListEntity? tasklist = TaskListEntity(name: 'Test', taskboards: []);
 
@@ -86,7 +82,7 @@ void main() async {
     tasklist = await setEntities.saveTasklist(tasklist);
 
     final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(GetEntitiesDataSourceDB(database)));
+        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
 
     tasklist = await getEntities.fetchTasklist(tasklist.id!);
 
@@ -94,12 +90,10 @@ void main() async {
   });
 
   test('fetch taskboard date_created recovered sucessfully', () async {
-    final DB db = DB.instance;
-    db.deleteDB();
-    final Database database = await db.database;
+    final Database database = await DB.instance.database;
 
     final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(SetEntitiesDataSourceDB(database)));
+        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
 
     TaskListEntity? tasklist = TaskListEntity(name: 'Test', taskboards: []);
 
@@ -117,7 +111,7 @@ void main() async {
     tasklist = await setEntities.saveTasklist(tasklist);
 
     final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(GetEntitiesDataSourceDB(database)));
+        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
 
     tasklist = await getEntities.fetchTasklist(tasklist.id!);
 

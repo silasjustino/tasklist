@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:sqflite/sqflite.dart';
 import 'package:tasklist/src/layers/data/datasources/interfaces/set_entities_datasource.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/queries/insert_db_query.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/queries/update_db_query.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
@@ -11,9 +12,17 @@ import 'package:tasklist/src/layers/data/dto/task_list_dto.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
 
 class SetEntitiesDataSourceDB implements SetEntitiesDataSource {
-  final Database _db;
+  late Database _db;
 
-  SetEntitiesDataSourceDB(this._db);
+  SetEntitiesDataSourceDB._();
+
+  static Future<SetEntitiesDataSourceDB> create() async {
+    var entity = SetEntitiesDataSourceDB._();
+
+    entity._db = await DB.instance.database;
+
+    return entity;
+  }
 
   @override
   Future<SettingsDto> saveSettings(SettingsDto settings) async {
