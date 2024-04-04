@@ -1,21 +1,20 @@
-import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/usecases/read_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/date_completed_dto.dart';
 import 'package:tasklist/src/layers/data/dto/task_dto.dart';
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
-class TaskBoardDto extends TaskBoardEntity {
-  int codTasklist;
+class TaskboardDto extends TaskboardEntity {
   String nameDto;
   String dateCreatedDto;
   int enabledDto;
   List<TaskEntity> tasksDto;
   List<DateCompletedEntity> dateCompletedDto;
 
-  TaskBoardDto({
+  TaskboardDto({
     int? cod,
-    required this.codTasklist,
+    required int codTasklist,
     required this.nameDto,
     required this.dateCreatedDto,
     required this.enabledDto,
@@ -32,13 +31,13 @@ class TaskBoardDto extends TaskBoardEntity {
     enabledDto == 0 ? enabled = false : enabled = true;
   }
 
-  static Future<TaskBoardDto> fromMap(Map map) async {
-    var getDB = await GetEntitiesDataSourceDB.create();
+  static Future<TaskboardDto> fromMap(Map map) async {
+    var getDB = await ReadEntitiesDataSourceDB.create();
 
     var tasks = await getDB.fetchListTask(map['cod']);
     var dateCompleted = await getDB.fetchListDateCompleted(map['cod']);
 
-    return TaskBoardDto(
+    return TaskboardDto(
       cod: map['cod'],
       codTasklist: map['cod_tasklist'],
       nameDto: map['name'],
@@ -52,14 +51,14 @@ class TaskBoardDto extends TaskBoardEntity {
   Map<String, dynamic> toMap() {
     return {
       'cod': id,
-      'cod_tasklist': codTasklist,
+      'cod_tasklist': idTasklist,
       'name': nameDto,
       'date_created': dateCreatedDto,
       'enabled': enabledDto,
     };
   }
 
-  factory TaskBoardDto.fromEntity(TaskBoardEntity taskboard) {
+  factory TaskboardDto.fromEntity(TaskboardEntity taskboard) {
     var tasks = <TaskEntity>[];
     var dateCompleted = <DateCompletedEntity>[];
 
@@ -76,7 +75,7 @@ class TaskBoardDto extends TaskBoardEntity {
       }
     }
 
-    return TaskBoardDto(
+    return TaskboardDto(
       cod: taskboard.id,
       codTasklist: taskboard.idTasklist,
       nameDto: taskboard.name,

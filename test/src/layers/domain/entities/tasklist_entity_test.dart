@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/tasklist_entity.dart';
 
 void main() {
-  TaskListEntity tasklist = TaskListEntity(id: 1, name: 'Test', taskboards: []);
+  TasklistEntity tasklist = TasklistEntity(id: 1, name: 'Test', taskboards: []);
 
   test('tasklist entity not null', () {
     expect(tasklist, isNotNull);

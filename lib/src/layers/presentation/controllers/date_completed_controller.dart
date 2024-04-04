@@ -1,19 +1,36 @@
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
-import 'package:tasklist/src/layers/domain/usecases/get_entities_usecase.dart';
-import 'package:tasklist/src/layers/domain/usecases/set_entities_usecase.dart';
+import 'package:tasklist/src/layers/domain/usecases/delete_entities_usecase.dart';
+import 'package:tasklist/src/layers/domain/usecases/read_entities_usecase.dart';
+import 'package:tasklist/src/layers/domain/usecases/create_entities_usecase.dart';
+import 'package:tasklist/src/layers/domain/usecases/update_entities_usecase.dart';
 
 class DateCompletedController {
-  final GetEntitiesUseCase _getEntities;
-  final SetEntitiesUseCase _setEntities;
+  final CreateEntitiesUseCase _createEntities;
+  final ReadEntitiesUseCase _readEntities;
+  final UpdateEntitiesUseCase _updateEntities;
+  final DeleteEntitiesUseCase _deleteEntities;
 
-  DateCompletedController(this._getEntities, this._setEntities);
+  DateCompletedController(
+    this._readEntities,
+    this._createEntities,
+    this._updateEntities,
+    this._deleteEntities,
+  );
 
-  Future<DateCompletedEntity?> getDateCompleted(id) async {
-    return await _getEntities.fetchDateCompleted(id);
+  Future<DateCompletedEntity> createDateCompleted(
+      DateCompletedEntity dateCompleted) async {
+    return await _createEntities.saveDateCompleted(dateCompleted);
   }
 
-  Future<DateCompletedEntity> setDateCompleted(
-      DateCompletedEntity dateCompleted) async {
-    return await _setEntities.saveDateCompleted(dateCompleted);
+  Future<DateCompletedEntity?> readDateCompleted(id) async {
+    return await _readEntities.fetchDateCompleted(id);
+  }
+
+  Future<bool> updateDateCompleted(DateCompletedEntity dateCompleted) async {
+    return await _updateEntities.updateDateCompleted(dateCompleted);
+  }
+
+  Future<bool> deleteDateCompleted(int id) async {
+    return await _deleteEntities.deleteDateCompleted(id);
   }
 }

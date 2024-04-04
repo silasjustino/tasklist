@@ -17,7 +17,7 @@ void main() {
       description: 'New Task 2',
     ),
   ];
-  TaskBoardEntity taskboard = TaskBoardEntity(
+  TaskboardEntity taskboard = TaskboardEntity(
     id: 1,
     idTasklist: 1,
     name: 'College',

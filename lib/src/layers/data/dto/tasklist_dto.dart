@@ -1,13 +1,13 @@
-import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/usecases/read_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/dto/taskboard_dto.dart';
-import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/tasklist_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
-class TaskListDto extends TaskListEntity {
+class TasklistDto extends TasklistEntity {
   String nameDto;
-  List<TaskBoardEntity> taskboardsDto;
+  List<TaskboardEntity> taskboardsDto;
 
-  TaskListDto({
+  TasklistDto({
     int? cod,
     required this.nameDto,
     required this.taskboardsDto,
@@ -17,12 +17,12 @@ class TaskListDto extends TaskListEntity {
           taskboards: taskboardsDto,
         );
 
-  static Future<TaskListDto> fromMap(Map map) async {
-    var getDB = await GetEntitiesDataSourceDB.create();
+  static Future<TasklistDto> fromMap(Map map) async {
+    var getDB = await ReadEntitiesDataSourceDB.create();
 
     var taskboards = await getDB.fetchListTaskboard(map['cod']);
     //fetch das taskboards
-    return TaskListDto(
+    return TasklistDto(
       cod: map['cod'],
       nameDto: map['name'],
       taskboardsDto: taskboards!,
@@ -36,16 +36,16 @@ class TaskListDto extends TaskListEntity {
     };
   }
 
-  factory TaskListDto.fromEntity(TaskListEntity tasklist) {
-    var taskboards = <TaskBoardEntity>[];
+  factory TasklistDto.fromEntity(TasklistEntity tasklist) {
+    var taskboards = <TaskboardEntity>[];
 
     if (tasklist.taskboards.isNotEmpty) {
       for (int i = 0; i < tasklist.taskboards.length; i++) {
-        taskboards.add(TaskBoardDto.fromEntity(tasklist.taskboards[i]));
+        taskboards.add(TaskboardDto.fromEntity(tasklist.taskboards[i]));
       }
     }
 
-    return TaskListDto(
+    return TasklistDto(
       cod: tasklist.id,
       nameDto: tasklist.name,
       taskboardsDto: taskboards,

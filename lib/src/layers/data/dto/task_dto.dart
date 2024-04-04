@@ -1,7 +1,6 @@
 import 'package:tasklist/src/layers/domain/entities/task_entity.dart';
 
 class TaskDto extends TaskEntity {
-  int codTaskboard;
   String descriptionDto;
   String dateCreatedDto;
   String? dateCompletedDto;
@@ -9,7 +8,7 @@ class TaskDto extends TaskEntity {
 
   TaskDto({
     int? cod,
-    required this.codTaskboard,
+    required int codTaskboard,
     required this.descriptionDto,
     required this.dateCreatedDto,
     required this.dateCompletedDto,
@@ -42,7 +41,7 @@ class TaskDto extends TaskEntity {
   Map<String, dynamic> toMap() {
     return {
       'cod': id,
-      'cod_taskboard': codTaskboard,
+      'cod_taskboard': idTaskboard,
       'description': descriptionDto,
       'date_created': dateCreatedDto,
       'date_completed': dateCompletedDto,

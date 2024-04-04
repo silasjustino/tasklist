@@ -4,12 +4,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/usecases/delete_entities_datasource_db.dart';
-import 'package:tasklist/src/layers/data/datasources/local/db/usecases/set_entities_datasource_db.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/usecases/create_entities_datasource_db.dart';
 import 'package:tasklist/src/layers/data/repositories/delete_entities_repository_imp.dart';
-import 'package:tasklist/src/layers/data/repositories/set_entities_repository_imp.dart';
+import 'package:tasklist/src/layers/data/repositories/create_entities_repository_imp.dart';
 import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
 import 'package:tasklist/src/layers/domain/usecases/delete_entities_usecase.dart';
-import 'package:tasklist/src/layers/domain/usecases/set_entities_usecase.dart';
+import 'package:tasklist/src/layers/domain/usecases/create_entities_usecase.dart';
 
 void main() {
   setUpAll(() {
@@ -23,8 +23,8 @@ void main() {
   test('Deleted corrected line', () async {
     final Database database = await DB.instance.database;
 
-    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
+    final CreateEntitiesUseCase setEntities = CreateEntitiesUseCaseImp(
+        CreateEntitiesRepositoryImp(await CreateEntitiesDataSourceDB.create()));
 
     final DeleteEntitiesUseCase deleteEntities = DeleteEntitiesUseCaseImp(
         DeleteEntitiesRepositoryImp(await DeleteEntitiesDataSourceDB.create()));

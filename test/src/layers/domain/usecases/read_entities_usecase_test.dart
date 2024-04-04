@@ -2,16 +2,16 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tasklist/src/layers/data/datasources/local/db/db.dart';
-import 'package:tasklist/src/layers/data/datasources/local/db/usecases/get_entities_datasource_db.dart';
-import 'package:tasklist/src/layers/data/datasources/local/db/usecases/set_entities_datasource_db.dart';
-import 'package:tasklist/src/layers/data/repositories/get_entities_repository_imp.dart';
-import 'package:tasklist/src/layers/data/repositories/set_entities_repository_imp.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/usecases/read_entities_datasource_db.dart';
+import 'package:tasklist/src/layers/data/datasources/local/db/usecases/create_entities_datasource_db.dart';
+import 'package:tasklist/src/layers/data/repositories/read_entities_repository_imp.dart';
+import 'package:tasklist/src/layers/data/repositories/create_entities_repository_imp.dart';
 import 'package:tasklist/src/layers/domain/entities/settings_entity.dart';
-import 'package:tasklist/src/layers/domain/entities/task_list_entity.dart';
+import 'package:tasklist/src/layers/domain/entities/tasklist_entity.dart';
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
-import 'package:tasklist/src/layers/domain/usecases/get_entities_usecase.dart';
+import 'package:tasklist/src/layers/domain/usecases/read_entities_usecase.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:tasklist/src/layers/domain/usecases/set_entities_usecase.dart';
+import 'package:tasklist/src/layers/domain/usecases/create_entities_usecase.dart';
 
 void main() async {
   setUpAll(() {
@@ -27,15 +27,15 @@ void main() async {
   test('fetch settings cod is not null', () async {
     final Database database = await DB.instance.database;
 
-    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
+    final CreateEntitiesUseCase setEntities = CreateEntitiesUseCaseImp(
+        CreateEntitiesRepositoryImp(await CreateEntitiesDataSourceDB.create()));
 
     SettingsEntity? settings = SettingsEntity();
 
     settings = await setEntities.saveSettings(settings);
 
-    final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
+    final ReadEntitiesUseCase getEntities = ReadEntitiesUseCaseImp(
+        ReadEntitiesRepositoryImp(await ReadEntitiesDataSourceDB.create()));
 
     settings = await getEntities.fetchSettings(settings.id!);
 
@@ -45,15 +45,15 @@ void main() async {
   test('fetch settings theme is dark', () async {
     final Database database = await DB.instance.database;
 
-    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
+    final CreateEntitiesUseCase setEntities = CreateEntitiesUseCaseImp(
+        CreateEntitiesRepositoryImp(await CreateEntitiesDataSourceDB.create()));
 
     SettingsEntity? settings = SettingsEntity();
 
     settings = await setEntities.saveSettings(settings);
 
-    final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
+    final ReadEntitiesUseCase getEntities = ReadEntitiesUseCaseImp(
+        ReadEntitiesRepositoryImp(await ReadEntitiesDataSourceDB.create()));
 
     settings = await getEntities.fetchSettings(settings.id!);
 
@@ -63,14 +63,14 @@ void main() async {
   test('fetch tasklist cod when saved', () async {
     final Database database = await DB.instance.database;
 
-    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
+    final CreateEntitiesUseCase setEntities = CreateEntitiesUseCaseImp(
+        CreateEntitiesRepositoryImp(await CreateEntitiesDataSourceDB.create()));
 
-    TaskListEntity? tasklist = TaskListEntity(name: 'Test', taskboards: []);
+    TasklistEntity? tasklist = TasklistEntity(name: 'Test', taskboards: []);
 
     tasklist = await setEntities.saveTasklist(tasklist);
 
-    TaskBoardEntity taskboard = TaskBoardEntity(
+    TaskboardEntity taskboard = TaskboardEntity(
       idTasklist: tasklist.id!,
       name: 'Taskboard',
       tasks: [],
@@ -81,8 +81,8 @@ void main() async {
 
     tasklist = await setEntities.saveTasklist(tasklist);
 
-    final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
+    final ReadEntitiesUseCase getEntities = ReadEntitiesUseCaseImp(
+        ReadEntitiesRepositoryImp(await ReadEntitiesDataSourceDB.create()));
 
     tasklist = await getEntities.fetchTasklist(tasklist.id!);
 
@@ -92,26 +92,24 @@ void main() async {
   test('fetch taskboard date_created recovered sucessfully', () async {
     final Database database = await DB.instance.database;
 
-    final SetEntitiesUseCase setEntities = SetEntitiesUseCaseImp(
-        SetEntitiesRepositoryImp(await SetEntitiesDataSourceDB.create()));
+    final CreateEntitiesUseCase setEntities = CreateEntitiesUseCaseImp(
+        CreateEntitiesRepositoryImp(await CreateEntitiesDataSourceDB.create()));
 
-    TaskListEntity? tasklist = TaskListEntity(name: 'Test', taskboards: []);
+    final ReadEntitiesUseCase getEntities = ReadEntitiesUseCaseImp(
+        ReadEntitiesRepositoryImp(await ReadEntitiesDataSourceDB.create()));
+
+    TasklistEntity? tasklist = TasklistEntity(name: 'Test', taskboards: []);
 
     tasklist = await setEntities.saveTasklist(tasklist);
 
-    TaskBoardEntity taskboard = TaskBoardEntity(
+    TaskboardEntity taskboard = TaskboardEntity(
       idTasklist: tasklist.id!,
       name: 'Taskboard',
       tasks: [],
       dateCompleted: [],
     );
 
-    tasklist.taskboards.add(taskboard);
-
-    tasklist = await setEntities.saveTasklist(tasklist);
-
-    final GetEntitiesUseCase getEntities = GetEntitiesUseCaseImp(
-        GetEntitiesRepositoryImp(await GetEntitiesDataSourceDB.create()));
+    await setEntities.saveTaskboard(taskboard);
 
     tasklist = await getEntities.fetchTasklist(tasklist.id!);
 

@@ -1,11 +1,11 @@
 import 'package:tasklist/src/layers/domain/entities/taskboard_entity.dart';
 
-class TaskListEntity {
+class TasklistEntity {
   int? id;
   String name;
-  List<TaskBoardEntity> taskboards;
+  List<TaskboardEntity> taskboards;
 
-  TaskListEntity({
+  TasklistEntity({
     this.id,
     required this.name,
     required this.taskboards,

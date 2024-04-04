@@ -1,12 +1,11 @@
 import 'package:tasklist/src/layers/domain/entities/date_completed_entity.dart';
 
 class DateCompletedDto extends DateCompletedEntity {
-  int codTaskboard;
   String dateCompletedDto;
 
   DateCompletedDto({
     int? cod,
-    required this.codTaskboard,
+    required int codTaskboard,
     required this.dateCompletedDto,
   }) : super(
           id: cod,
@@ -26,7 +25,7 @@ class DateCompletedDto extends DateCompletedEntity {
   Map<String, dynamic> toMap() {
     return {
       'cod': id,
-      'cod_taskboard': codTaskboard,
+      'cod_taskboard': idTaskboard,
       'date_completed': dateCompletedDto,
     };
   }
