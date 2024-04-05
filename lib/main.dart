@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:tasklist/src/layers/presentation/shared/modules/app_module.dart';
+import 'package:tasklist/src/layers/presentation/ui/app_widget.dart';
 
 void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
 }
